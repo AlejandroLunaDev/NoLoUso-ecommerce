@@ -17,7 +17,7 @@ export const SidebarCart = ({ isOpen, setOpen }) => {
   const subtotal = total.toFixed(2);
   const descuento = 0;
   const totalf = subtotal - descuento;
-
+console.log(cart)
   const alertaDeleteCarrito = () => {
     Swal.fire({
       title: "Estas Seguro de Eliminar tu Carrito?",
@@ -93,12 +93,12 @@ export const SidebarCart = ({ isOpen, setOpen }) => {
                     onClick={() => setOpen(false)}
                     className=" w-36"
                   >
-                    <img className=" h-28" src={item.img} alt={item.name} />
+                    <img className=" h-28" src={item.img} alt={item.title} />
                   </Link>
                 </div>
                 <div>
                   <div>
-                    <span>{item.name}</span>
+                    <span>{item.title}</span>
                     <p className="mb-3">${item.price}</p>
                     <ItemCount productId={item.id} stock={item.stock} />
                   </div>

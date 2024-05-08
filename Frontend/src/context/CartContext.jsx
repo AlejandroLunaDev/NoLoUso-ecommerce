@@ -7,10 +7,10 @@ export const CartProvider = ({ children }) => {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   const addItem = (productToAdd) => {
-    const { id, name, price, quantity, stock } = productToAdd;
-    const img = productToAdd.img || "";
+    const { id, title, price, quantity, stock } = productToAdd;
+    const img = productToAdd.thumbnails || "";
     if (!isInCart(productToAdd.id)) {
-      setCart((prev) => [...prev, { id, name, price, quantity, img, stock }]);
+      setCart((prev) => [...prev, { id, title, price, quantity, img, stock }]);
     } else {
       console.error("El producto ya está agregado");
     }

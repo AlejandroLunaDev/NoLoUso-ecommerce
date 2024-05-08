@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "@/context/CartContext";
 import { ItemCount } from "../components/Ui/ItemCount/ItemCount";
 import { AiOutlineClose } from "react-icons/ai";
@@ -6,17 +6,7 @@ import { Cart } from "../components/icons/Cart";
 import { Link } from "react-router-dom";
 import { routes } from "@/routes/routes";
 import { PurchaseButton } from "../components/Ui/Button/PurchaseButton";
-import { db } from "../service/firebase/firebase";
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  documentId,
-  writeBatch,
-  addDoc,
-  Timestamp,
-} from "firebase/firestore";
+import { getProductById } from "../service/db/productsMongo";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { validateForm } from "../helper/validateForm";
@@ -28,8 +18,24 @@ export const CheckOut = () => {
   const totalf = (subtotal - descuento).toFixed(2);
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
+  const [productsData, setProductsData] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Función asincrónica para obtener los datos de los productos por ID
+    const fetchProductsData = async () => {
+      const productsPromises = cart.map(async (item) => {
+        const productData = await getProductById(item.id);
+        console.log(productData);
+        return { ...productData, quantity: item.quantity };
+      });
+      const productsData = await Promise.all(productsPromises);
+      setProductsData(productsData);
+    };
+
+    fetchProductsData();
+  }, [cart]);
 
   const compraFinalizada = () => {
     Swal.fire({
@@ -40,6 +46,7 @@ export const CheckOut = () => {
       timer: 2200,
     });
   };
+
   const backHome = () => {
     navigate("/");
   };
@@ -60,6 +67,7 @@ export const CheckOut = () => {
     const { errors: fieldErrors } = validateForm({ [name]: value });
     setFormErrors({ ...formErrors, [name]: fieldErrors[name] });
   };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -73,7 +81,7 @@ export const CheckOut = () => {
     removeItem(item.id);
   };
 
-  const FinalizarPedido = async () => {
+/*   const FinalizarPedido = async () => {
     const { errors, isValid } = validateForm(formData);
     setFormErrors(errors);
     setIsValid(isValid);
@@ -136,7 +144,7 @@ export const CheckOut = () => {
       console.log("El formulario no es válido");
     }
   };
-
+ */
   if (loading) {
     return <h1>Su orden esta siendo generada...</h1>;
   }
@@ -144,6 +152,7 @@ export const CheckOut = () => {
   if (orderId) {
     return <h1>El id de su orden es: {orderId}</h1>;
   }
+
   return (
     <section className="p-2 h-dvh w-full overflow-y-auto">
       <header className="flex gap-4 px-4  ">
@@ -164,18 +173,18 @@ export const CheckOut = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((item, index) => (
+              {productsData.map((item, index) => (
                 <tr key={index}>
                   <td className="items-center w-36 ">
                     <Link
-                      to={`/product/${item.firestoreId}`}
+                      to={`/product/${item.id}`}
                       className="flex justify-center mt-2 "
                     >
-                      <img className="h-20" src={item.img} alt={item.name} />
+                      <img className="h-20" src={item.thumbnails} alt={item.title} />
                     </Link>
                   </td>
                   <td className="text-center w-74">
-                    <span>{item.name}</span>
+                    <span>{item.title}</span>
                   </td>
                   <td className="text-center">${item.price}</td>
                   <td>
@@ -237,7 +246,7 @@ export const CheckOut = () => {
                     <p className="text-red-500 text-sm mb-2">
                       {formErrors.nombre}
                     </p>
-                  )}{" "}
+                  )}
                   <label htmlFor="email">Email:</label>
                   <input
                     type="email"
@@ -252,7 +261,7 @@ export const CheckOut = () => {
                     <p className="text-red-500 text-sm mb-2">
                       {formErrors.email}
                     </p>
-                  )}{" "}
+                  )}
                   <label htmlFor="telefono">Teléfono:</label>
                   <input
                     type="tel"
@@ -270,7 +279,7 @@ export const CheckOut = () => {
                   )}
                 </form>
               </div>
-              <div  onClick={isValid ? FinalizarPedido : undefined}>
+              <div /* onClick={isValid ? FinalizarPedido : undefined} */>
                 <PurchaseButton
                   text={"Finalizar Compra"}
                   disabled={!isValid}

@@ -1,7 +1,7 @@
 import { ItemDetail } from "../ItemDetail/ItemDetail";
 import { useParams } from "react-router";
 import { useAsync } from "../../hook/useAsync";
-import { getProductById } from "../../service/db/productsMongo"; // Importa la función para obtener un producto por ID desde MongoDB
+import { getProductById } from "../../service/db/productsMongo"; 
 
 export function ItemDetailContainer() {
   const { itemId } = useParams();

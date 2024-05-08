@@ -1,4 +1,5 @@
 import ProductDaoMongo from '../dao/productDao.js';
+ 
 
 class ProductController {
   async createProduct(req, res) {
@@ -21,7 +22,7 @@ class ProductController {
   }
   async getProductById(req, res) {
     try {
-      const productId = Number(req.params.id);
+      const productId = req.params.id; // Sin conversión a número
       const product = await ProductDaoMongo.getBy(productId);
       if (!product) {
         res.status(404).json({ error: 'Producto no encontrado' });
@@ -29,11 +30,11 @@ class ProductController {
         res.status(200).json(product);
       }
     } catch (error) {
-      console.error('Error al obtener el producto por ID:', error); 
+      console.error('Error al obtener el producto por ID:', error);
       res.status(500).json({ error: 'Error al obtener el producto' });
     }
   }
-
+  
   async updateProduct(req, res) {
     try {
       const productId = req.params.id;
@@ -48,12 +49,15 @@ class ProductController {
   async deleteProduct(req, res) {
     try {
       const productId = req.params.id;
-      await ProductDaoMongo.delete(productId);
+      const deletedProduct = await ProductDaoMongo.delete(productId);
+      if (!deletedProduct) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
       res.status(200).json({ message: 'Producto eliminado correctamente' });
     } catch (error) {
       res.status(500).json({ error: 'Error al eliminar el producto' });
     }
   }
-}
+    }
 
 export default new ProductController();

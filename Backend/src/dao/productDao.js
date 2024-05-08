@@ -1,8 +1,11 @@
 import { productModel } from '../models/productModel.js';
+import { ObjectId } from 'mongoose';
+
 
 class ProductDaoMongo {
   static async create(newProduct) {
     try {
+      newProduct.created_at = new Date(); // Agregar la fecha y hora actual al producto
       return await productModel.create(newProduct);
     } catch (error) {
       throw new Error('Error al crear el producto');
@@ -20,7 +23,7 @@ class ProductDaoMongo {
 
   static async getBy(id) {
     try {
-      return await productModel.findOne({id:id });
+      return await productModel.findById(id);
     } catch (error) {
       throw new Error('Error al obtener el producto');
     }
@@ -35,13 +38,16 @@ class ProductDaoMongo {
     }
   }
 
-  static async delete(id) {
+  static async delete(productId) {
     try {
-      return await productModel.deleteOne({ _id: id });
+      console.log('Eliminando el producto...', productId);
+      return await productModel.findOneAndDelete(productId);
     } catch (error) {
       throw new Error('Error al eliminar el producto');
     }
   }
+  
+   
 }
 
 export default ProductDaoMongo;

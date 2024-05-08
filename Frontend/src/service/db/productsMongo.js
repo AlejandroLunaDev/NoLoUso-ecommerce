@@ -1,6 +1,5 @@
 const BASE_URL = 'http://localhost:8080';
 
-
 export const getAllProducts = async () => {
   try {
     const response = await fetch(`${BASE_URL}/api/products`);
@@ -13,7 +12,7 @@ export const getAllProducts = async () => {
     console.error('Error al obtener los productos:', error);
     throw error;
   }
-}
+};
 
 export const getProductById = async (productId) => {
   try {
@@ -29,4 +28,58 @@ export const getProductById = async (productId) => {
   }
 };
 
+export const createProduct = async (newProduct) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProduct),
+    });
+    if (!response.ok) {
+      throw new Error('Error al crear el producto');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al crear el producto:', error);
+    throw error;
+  }
+};
 
+export const updateProduct = async (productId, updatedProduct) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedProduct),
+    });
+    if (!response.ok) {
+      throw new Error('Error al actualizar el producto');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al actualizar el producto:', error);
+    throw error;
+  }
+};
+
+export const deleteProduct = async (productId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products/${productId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Error al eliminar el producto');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al eliminar el producto:', error);
+    throw error;
+  }
+};

@@ -3,14 +3,14 @@ import { Hambuerguer } from '../icons/Hambuerguer';
 import { NavLink } from 'react-router-dom';
 import { useAsync } from "../../hook/useAsync";
 import { useParams } from "react-router-dom";
-import { getProducts } from "../../service/firebase/firestore/products";
+import { getAllProducts } from "../../service/db/productsMongo";
 
 export function NavCategorias({ handleCategoryClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [uniqueCategories, setUniqueCategories] = useState([]);
  
   const { categoryId } = useParams()
-  const asyncFunction = () =>  getProducts(categoryId)
+  const asyncFunction = () =>  getAllProducts(categoryId)
   const { data: products, loading, error } = useAsync(asyncFunction, [categoryId])
 
   useEffect(() => {

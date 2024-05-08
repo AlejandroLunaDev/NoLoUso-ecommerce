@@ -1,7 +1,7 @@
 import { ItemList } from "../ItemList/ItemList";
 import { useAsync } from "../../hook/useAsync";
 import { memo } from "react";
-import { getAllProducts } from "../../service/db/productsMongo"; // Importa la función para obtener todos los productos de MongoDB
+import { getAllProducts } from "../../service/db/productsMongo";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -16,12 +16,12 @@ export function ItemlistContainer({ greeting }) {
   if (isSearchPage) {
     categoryToFetch = location.pathname.split("/search/")[1];
   }
-  const asyncFunction = () => getAllProducts(); // Usa la función para obtener todos los productos de MongoDB
+  const asyncFunction = () => getAllProducts();
   const {
     data: products,
     loading,
     error,
-  } = useAsync(asyncFunction, []); // No es necesario pasar ningún argumento en este caso
+  } = useAsync(asyncFunction, []); 
 
   if (loading) {
     return <h1>Se están cargando los productos...</h1>;

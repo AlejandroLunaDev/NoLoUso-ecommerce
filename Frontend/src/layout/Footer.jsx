@@ -5,9 +5,28 @@ import {
   SlSocialFacebook
 } from "react-icons/sl";
 import categoriaData from "../components/Ui/InputSearch/categorias.json";
-import { NavLink } from "react-router-dom";
-
+import { getAllProducts } from "../service/db/productsMongo";
+import { NavLink, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAsync } from "../hook/useAsync";
+useAsync
 export function Footer() {
+  const [uniqueCategories, setUniqueCategories] = useState([]);
+  const { categoryId } = useParams()
+  const asyncFunction = () =>  getAllProducts(categoryId)
+  const { data: products, loading, error } = useAsync(asyncFunction, [categoryId])
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      const categoriesSet = new Set(products.map(product => product.category));
+      setUniqueCategories(Array.from(categoriesSet));
+    }
+  }, [products]);
+
+
+
+
+
   const handleCategoryClick = async () => {};
   return (
     <footer className="p-2 border-t border-[#61005D] mt-3" >
@@ -35,15 +54,15 @@ export function Footer() {
       </article>
       <article>
         <h1 className="text-lg font-semibold">Categorias</h1>
-        {categoriaData.categorias.map((categoria, index) => (
-          <NavLink
-            to={`/categoria/${categoria.name.toLowerCase()}`}
-            key={index}
-            onClick={() => handleCategoryClick(categoria.name)}
-          >
-            <p className="text-sm hover:border-b border-[#61005D]">{categoria.name}</p>
-          </NavLink>
-        ))}
+        {uniqueCategories.map((category, index) => (
+            <NavLink
+              to={`/categoria/${category.toLowerCase()}`}
+              key={index}
+              onClick={() => handleCategoryClick(category)}
+            >
+              <p className="hover:border-b border-[#61005D]">{category}</p>
+            </NavLink>
+          ))}
       </article>
       </section>
       <section className="text-center mt-3">
