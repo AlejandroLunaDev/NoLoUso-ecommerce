@@ -133,7 +133,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
+        <button type="submit" className="bg-[#61005D] text-white px-4 py-2 rounded-md mt-4">
           Add Product
         </button>
       </form>

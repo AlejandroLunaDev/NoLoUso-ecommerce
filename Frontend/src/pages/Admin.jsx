@@ -21,7 +21,7 @@ export const Admin = () => {
         {/* Botones de pestañas */}
         <button
           className={`px-4 py-2 mr-2 ${
-            activeTab === "form" ? "bg-blue-500 text-white" : "bg-gray-300"
+            activeTab === "form" ? "bg-[#61005D] text-white" : "bg-gray-300"
           }`}
           onClick={() => handleTabClick("form")}
         >
@@ -29,7 +29,7 @@ export const Admin = () => {
         </button>
         <button
           className={`px-4 py-2 ${
-            activeTab === "list" ? "bg-blue-500 text-white" : "bg-gray-300"
+            activeTab === "list" ? "bg-[#61005D] text-white" : "bg-gray-300"
           }`}
           onClick={() => handleTabClick("list")}
         >
