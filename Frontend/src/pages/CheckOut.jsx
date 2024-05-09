@@ -26,8 +26,7 @@ export const CheckOut = () => {
     // Función asincrónica para obtener los datos de los productos por ID
     const fetchProductsData = async () => {
       const productsPromises = cart.map(async (item) => {
-        const productData = await getProductById(item.id);
-        console.log(productData);
+        const productData = await getProductById(item.itemId);
         return { ...productData, quantity: item.quantity };
       });
       const productsData = await Promise.all(productsPromises);
@@ -81,77 +80,7 @@ export const CheckOut = () => {
     removeItem(item.id);
   };
 
-/*   const FinalizarPedido = async () => {
-    const { errors, isValid } = validateForm(formData);
-    setFormErrors(errors);
-    setIsValid(isValid);
-
-    if (isValid) {
-      try {
-        setLoading(true);
-        const totalCompra = Number(total);
-        const objOrder = {
-          Cliente: formData,
-          productos: cart.map((item) => ({ ...item, cantidad: item.quantity })),
-          total: totalCompra,
-          date: Timestamp.fromDate(new Date()),
-        };
-
-        const batch = writeBatch(db);
-        const outOfStock = [];
-        const ids = cart.map((prod) => prod.id);
-
-        const productsCollection = query(
-          collection(db, "products"),
-          where(documentId(), "in", ids)
-        );
-
-        const querySnapshot = await getDocs(productsCollection);
-        const { docs } = querySnapshot;
-
-        docs.forEach((doc) => {
-          const data = doc.data();
-          const stockDb = data.stock;
-
-          const productAddedToCart = cart.find((prod) => prod.id === doc.id);
-          const prodQuantity = productAddedToCart.quantity;
-
-          if (stockDb >= prodQuantity) {
-            batch.update(doc.ref, { stock: stockDb - prodQuantity });
-          } else {
-            outOfStock.push({ id: doc.id, ...data });
-          }
-        });
-
-        if (outOfStock.length === 0) {
-          batch.commit();
-
-          const orderCollection = collection(db, "orders");
-          const { id } = await addDoc(orderCollection, objOrder);
-          compraFinalizada();
-          backHome();
-          clearCart();
-          setOrderId(id);
-        } else {
-          console.error("hay productos que no tienen stock disponible");
-        }
-      } catch (error) {
-        console.error("Hubo un error en la generacion de la orden");
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      console.log("El formulario no es válido");
-    }
-  };
- */
-  if (loading) {
-    return <h1>Su orden esta siendo generada...</h1>;
-  }
-
-  if (orderId) {
-    return <h1>El id de su orden es: {orderId}</h1>;
-  }
+ 
 
   return (
     <section className="p-2 h-dvh w-full overflow-y-auto">

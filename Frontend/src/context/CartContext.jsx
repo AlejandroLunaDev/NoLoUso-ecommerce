@@ -7,14 +7,15 @@ export const CartProvider = ({ children }) => {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   const addItem = (productToAdd) => {
-    const { id, title, price, quantity, stock } = productToAdd;
+    const { itemId, title, price, quantity, stock } = productToAdd;
     const img = productToAdd.thumbnails || "";
-    if (!isInCart(productToAdd.id)) {
-      setCart((prev) => [...prev, { id, title, price, quantity, img, stock }]);
+    if (!isInCart(itemId)) { // Aquí corregimos el uso de itemId
+      setCart((prev) => [...prev, { itemId, title, price, quantity, img, stock }]);
     } else {
       console.error("El producto ya está agregado");
     }
   };
+  
 
   const addQuantity = (productId, quantityToAdd) => {
     const productToUpdateIndex = cart.findIndex(
@@ -42,18 +43,20 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
-  const isInCart = (id) => {
-    return cart.some((prod) => prod.id === id);
+  const isInCart = (itemId) => {
+    const isInCart = cart.some((prod) => prod.itemId === itemId);
+    return isInCart;
   };
 
   const clearCart = () => {
     setCart([]);
   };
 
-  const removeItem = (id) => {
-    const updatedCart = cart.filter((prod) => prod.id !== id);
+  const removeItem = (itemId) => {
+    const updatedCart = cart.filter((prod) => prod.itemId !== itemId);
     setCart(updatedCart);
   };
+  
 
   useEffect(() => {
     const updatedQuantity = cart.reduce((acc, curr) => acc + curr.quantity, 0);

@@ -17,7 +17,7 @@ export const SidebarCart = ({ isOpen, setOpen }) => {
   const subtotal = total.toFixed(2);
   const descuento = 0;
   const totalf = subtotal - descuento;
-console.log(cart)
+
   const alertaDeleteCarrito = () => {
     Swal.fire({
       title: "Estas Seguro de Eliminar tu Carrito?",
@@ -57,7 +57,11 @@ console.log(cart)
   };
 
   const handleRemoveItem = (item) => {
-    removeItem(item.id);
+    if (item && item.itemId) {
+      removeItem(item.itemId);
+    } else {
+      console.error("Item or item ID is undefined:", item);
+    }
   };
 
   const handleCheckout = () => {

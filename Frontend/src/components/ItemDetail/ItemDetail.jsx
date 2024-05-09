@@ -1,12 +1,9 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Add, Remove } from "@/components";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-
-
-
 
 const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
   const [count, setCount] = useState(initial);
@@ -15,7 +12,7 @@ const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
     Toastify({
       text: "Producto Agregado al Carrito",
       position: "right",
-      gravity:"bottom",
+      gravity: "bottom",
       duration: 1500,
       style: {
         background: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -64,38 +61,40 @@ const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
 };
 
 export function ItemDetail({
-  id,
   title,
   category,
   thumbnails,
   price,
   stock,
   description,
-  _id,
 }) {
   const ItemCount = ButtonCount;
-  const { addItem, isInCart } = useContext(CartContext);
+  const { addItem, isInCart, cart } = useContext(CartContext);
   const [hasStock, setHasStock] = useState(stock > 0);
+  const { itemId } = useParams();
 
   const handleOnAdd = (quantity) => {
     const objProductToAdd = {
-      id,
+      itemId,
       title,
       price,
       quantity,
       thumbnails,
       stock,
     };
-
     addItem(objProductToAdd);
   };
 
   return (
     <section className="flex-none md:flex gap-4">
       <article className="">
-      <header className="p-10">
-          <img className=" h-44 md:h-[400px]" src={thumbnails} alt={title} />
-      </header>
+        <header className="p-10">
+          <img
+            className="h-44 md:h-[400px]"
+            src={thumbnails}
+            alt={title}
+          />
+        </header>
       </article>
       <aside className="md:border-l pl-8">
         <article>
@@ -103,7 +102,7 @@ export function ItemDetail({
             <h3 className="font-semibold text-xl mb-2">{title}</h3>
             <div className="flex font-semibold text-sm gap-2">
               <p className="border-r border-black pr-3">SKU</p>
-              <p>{_id}</p>
+              <p>{itemId}</p>
             </div>
           </header>
           <p className="font-bold mb-5">$ {price}</p>
@@ -112,15 +111,16 @@ export function ItemDetail({
           <h3 className="font-bold">Descripción</h3>
           <p className="text-[11px] md:text-sm">{description}</p>
         </article>
-        <div className=" w-60 mt-8">
+        <div className="w-60 mt-8">
           {hasStock ? (
-            !isInCart(id) ? (
+            !isInCart(itemId) ? (
               <ItemCount onAdd={handleOnAdd} stock={stock} />
-            ) : (
-              <div className="bg-[#61005D] rounded text-center text-white py-1">
+              ) : (
+                <div className="bg-[#61005D] rounded text-center text-white py-1">
                 <Link to="/">Seguir Comprando</Link>
               </div>
-            )
+              
+              )
           ) : (
             <div className="bg-red-500 text-white rounded px-2 py-1">
               No hay stock de este producto
