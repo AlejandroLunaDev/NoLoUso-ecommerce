@@ -35,7 +35,7 @@ export function Footer() {
         <h1 className="text-lg font-semibold">Seguinos</h1>
         <div className="flex gap-3 mt-3">
           <NavLink
-            to={"https://github.com/AlejandroLunaDev/nlu-ecommerce"}
+            to={"https://github.com/AlejandroLunaDev/NoLoUso-ecommerce"}
             target="_blank"
             className={'social-icon'}
           >
