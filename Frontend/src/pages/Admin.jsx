@@ -4,7 +4,7 @@ import { FormAdmin } from "../components/FormAdmin/FormAdmin";
 
 export const Admin = () => {
   const [products, setProducts] = useState([]);
-  const [activeTab, setActiveTab] = useState("form"); 
+  const [activeTab, setActiveTab] = useState("list"); // Cambiado a "list"
 
   const handleAddProduct = (newProduct) => {
     setProducts([...products, newProduct]);

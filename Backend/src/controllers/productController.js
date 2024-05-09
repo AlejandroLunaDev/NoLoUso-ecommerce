@@ -14,12 +14,14 @@ class ProductController {
 
   async getAllProducts(req, res) {
     try {
-      const products = await ProductDaoMongo.get(); 
+      const sortOrder = req.query.sort || 'desc'; // Obtener el orden de la consulta
+      const products = await ProductDaoMongo.get(sortOrder); // Llamar a ProductDaoMongo con sortOrder
       res.status(200).json(products);
     } catch (error) {
       res.status(500).json({ error: 'Error al obtener los productos' });
     }
   }
+  
   async getProductById(req, res) {
     try {
       const productId = req.params.id; // Sin conversión a número
@@ -50,6 +52,7 @@ class ProductController {
     try {
       const productId = req.params.id;
       const deletedProduct = await ProductDaoMongo.delete(productId);
+      console.log(productId)
       if (!deletedProduct) {
         return res.status(404).json({ error: 'Producto no encontrado' });
       }

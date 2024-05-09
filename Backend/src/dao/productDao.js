@@ -1,6 +1,4 @@
 import { productModel } from '../models/productModel.js';
-import { ObjectId } from 'mongoose';
-
 
 class ProductDaoMongo {
   static async create(newProduct) {
@@ -12,15 +10,6 @@ class ProductDaoMongo {
     }
   }
 
-  static async get() { 
-    try {
-      console.log('Obteniendo todos los productos...');
-      return await productModel.find().exec();
-    } catch (error) {
-      throw new Error('Error al obtener los productos');
-    }
-  }
-
   static async getBy(id) {
     try {
       return await productModel.findById(id);
@@ -28,7 +17,6 @@ class ProductDaoMongo {
       throw new Error('Error al obtener el producto');
     }
   }
-  
 
   static async update(id, updateBody) {
     try {
@@ -41,13 +29,21 @@ class ProductDaoMongo {
   static async delete(productId) {
     try {
       console.log('Eliminando el producto...', productId);
-      return await productModel.findOneAndDelete(productId);
+      return await productModel.findOneAndDelete({ _id: productId });
     } catch (error) {
       throw new Error('Error al eliminar el producto');
     }
   }
-  
-   
+
+  static async get(sortBy = 'desc') {
+    try {
+      let sortOrder = sortBy === 'asc' ? 1 : -1;
+      console.log(`Obteniendo todos los productos ordenados por fecha (${sortBy})...`);
+      return await productModel.find().sort({ created_at: sortOrder }).exec();
+    } catch (error) {
+      throw new Error('Error al obtener los productos');
+    }
+  }
 }
 
 export default ProductDaoMongo;

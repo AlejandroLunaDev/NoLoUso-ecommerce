@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { createProduct } from "@/service/db/productsMongo";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 export const FormAdmin = ({ onAddProduct }) => {
   const [newProduct, setNewProduct] = useState({
@@ -32,6 +34,11 @@ export const FormAdmin = ({ onAddProduct }) => {
         stock: "",
         category: "",
         thumbnails: "",
+      });
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto Guardado',
+        text: 'El producto se ha guardado correctamente.',
       });
     } catch (error) {
       console.error("Error creating product:", error);
@@ -134,7 +141,7 @@ export const FormAdmin = ({ onAddProduct }) => {
           />
         </div>
         <button type="submit" className="bg-[#61005D] text-white px-4 py-2 rounded-md mt-4">
-          Add Product
+          Agregar
         </button>
       </form>
     </div>

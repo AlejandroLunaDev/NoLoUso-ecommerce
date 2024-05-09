@@ -1,8 +1,8 @@
 const BASE_URL = 'http://localhost:8080';
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (sortOrder) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/products`);
+    const response = await fetch(`${BASE_URL}/api/products?sort=${sortOrder}`);
     if (!response.ok) {
       throw new Error('Error al obtener los productos');
     }
@@ -13,6 +13,8 @@ export const getAllProducts = async () => {
     throw error;
   }
 };
+
+
 
 export const getProductById = async (productId) => {
   try {
