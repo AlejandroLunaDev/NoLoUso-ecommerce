@@ -4,5 +4,6 @@ export const routes = {
     category: '/category/:id',
     item: '/item/:id',
     admin: '/admin',
+    chat: '/chat',
     search: '/search/:searchQuery', 
   }

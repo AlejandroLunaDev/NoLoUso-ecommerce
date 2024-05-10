@@ -41,7 +41,7 @@ export function Navbar() {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={routes.error} className="flex gap-2">
+                <NavLink to='/chat' className="flex gap-2">
                   <Chat />
                   Chat
                 </NavLink>
