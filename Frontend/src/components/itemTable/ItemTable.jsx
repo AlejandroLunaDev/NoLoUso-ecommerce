@@ -9,13 +9,14 @@ export const ItemTable = ({ products, setProducts }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+
   useEffect(() => {
     fetchProducts();
   }, [sortOrder]);
 
   const fetchProducts = async () => {
     try {
-      const allProducts = await getAllProducts(sortOrder);
+      const allProducts = await getAllProducts(sortOrder,);
       setProducts(allProducts);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -73,7 +74,7 @@ export const ItemTable = ({ products, setProducts }) => {
     setSortOrder(newSortOrder);
   };
 
-  const sortOrderText = sortOrder === 'desc' ? 'más antiguo' : 'más nuevo';
+
 
   return (
     <div className="container mx-auto mt-8">

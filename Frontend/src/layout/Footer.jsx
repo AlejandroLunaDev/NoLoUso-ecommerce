@@ -52,7 +52,7 @@ export function Footer() {
           <SlSocialFacebook className={'social-icon'} />
         </div>
       </article>
-      <article>
+{/*       <article>
         <h1 className="text-lg font-semibold">Categorias</h1>
         {uniqueCategories.map((category, index) => (
             <NavLink
@@ -63,7 +63,7 @@ export function Footer() {
               <p className="hover:border-b border-[#61005D]">{category}</p>
             </NavLink>
           ))}
-      </article>
+      </article> */}
       </section>
       <section className="text-center mt-3">
         <span className="">Copyright © 2024 Alejandro Luna - Design by Alejandro Luna</span>

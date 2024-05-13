@@ -7,6 +7,7 @@ import socketConfig from "./configs/socketConfig.js";
 
 // Importar rutas
 import productRouter from "./routes/productsRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
 const httpServer = app.listen(config.PORT, () => {
@@ -29,6 +30,7 @@ app.use(cors({
 
 // Rutas
 app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
 
 // Configurar Socket.io
 socketConfig(httpServer);

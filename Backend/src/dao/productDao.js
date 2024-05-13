@@ -3,7 +3,7 @@ import { productModel } from '../models/productModel.js';
 class ProductDaoMongo {
   static async create(newProduct) {
     try {
-      newProduct.created_at = new Date(); // Agregar la fecha y hora actual al producto
+      newProduct.created_at = new Date(); 
       return await productModel.create(newProduct);
     } catch (error) {
       throw new Error('Error al crear el producto');

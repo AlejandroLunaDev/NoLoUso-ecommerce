@@ -14,8 +14,8 @@ class ProductController {
 
   async getAllProducts(req, res) {
     try {
-      const sortOrder = req.query.sort || 'desc'; // Obtener el orden de la consulta
-      const products = await ProductDaoMongo.get(sortOrder); // Llamar a ProductDaoMongo con sortOrder
+      const sortOrder = req.query.sort || 'desc'; 
+      const products = await ProductDaoMongo.get(sortOrder); 
       res.status(200).json(products);
     } catch (error) {
       res.status(500).json({ error: 'Error al obtener los productos' });
@@ -24,7 +24,7 @@ class ProductController {
   
   async getProductById(req, res) {
     try {
-      const productId = req.params.id; // Sin conversión a número
+      const productId = req.params.id;
       const product = await ProductDaoMongo.getBy(productId);
       if (!product) {
         res.status(404).json({ error: 'Producto no encontrado' });

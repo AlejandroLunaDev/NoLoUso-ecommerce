@@ -6,4 +6,5 @@ export const routes = {
     admin: '/admin',
     chat: '/chat',
     search: '/search/:searchQuery', 
+    login: '/login',
   }

@@ -1,6 +1,6 @@
 export * from './icons/Add'
 export * from './icons/Alert'
-export * from './icons/Box'
+export * from './icons/BoxIcon'
 export * from './icons/Cart'
 export * from './icons/Chat'
 export * from './icons/Hambuerguer'
