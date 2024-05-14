@@ -32,6 +32,10 @@ const userSchema = new Schema({
   last_connection: {
     type: Date,
   },
+  online: {
+    type: Boolean,
+    default: false,
+  },
   cart: {
     type: Schema.Types.ObjectId,
     ref: "carts",

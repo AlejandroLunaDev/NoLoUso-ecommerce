@@ -38,7 +38,7 @@ export const UserLogin = () => {
       )}
       {user && menuOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-          {user?.role === 'admin' && ( // Condición para mostrar la opción "Admin" solo si el usuario es admin
+          {user?.role === 'admin' && (
             <NavLink
               to={routes.admin}
               className="block px-4 py-2 text-gray-800 hover:bg-gray-200"

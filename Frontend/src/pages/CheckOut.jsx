@@ -16,8 +16,6 @@ export const CheckOut = () => {
   const subtotal = total.toFixed(2);
   const descuento = 0;
   const totalf = (subtotal - descuento).toFixed(2);
-  const [loading, setLoading] = useState(false);
-  const [orderId, setOrderId] = useState(null);
   const [productsData, setProductsData] = useState([]);
 
   const navigate = useNavigate();
@@ -35,6 +33,8 @@ export const CheckOut = () => {
 
     fetchProductsData();
   }, [cart]);
+
+
 
   const compraFinalizada = () => {
     Swal.fire({
@@ -102,11 +102,11 @@ export const CheckOut = () => {
               </tr>
             </thead>
             <tbody>
-              {productsData.map((item, index) => (
-                <tr key={index}>
+              {productsData.map((item) => (
+                <tr key={item._id}>
                   <td className="items-center w-36 ">
                     <Link
-                      to={`/product/${item.id}`}
+                      to={`/product/${item._id}`}
                       className="flex justify-center mt-2 "
                     >
                       <img className="h-20" src={item.thumbnails} alt={item.title} />

@@ -81,7 +81,7 @@ export const SidebarCart = ({ isOpen, setOpen }) => {
         <div className="mt-4">
           <ul className="overflow-y-auto max-h-[450px] mb-5">
             {cart.map((item) => (
-              <li className="flex gap-6" key={item.id}>
+              <li className="flex gap-6" key={item.itemId}>
                 <div className="flex gap-1">
                   <button
                     className="border border-black rounded-full mt-4 p-1 h-6 w-6 flex items-center justify-center"
@@ -93,7 +93,7 @@ export const SidebarCart = ({ isOpen, setOpen }) => {
                     <AiOutlineClose />
                   </button>
                   <Link
-                    to={`/product/${item.id}`}
+                    to={`/product/${item.itemId}`}
                     onClick={() => setOpen(false)}
                     className=" w-36"
                   >

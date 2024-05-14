@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { ItemTable } from "../components/itemTable/ItemTable";
 import { FormAdmin } from "../components/FormAdmin/FormAdmin";
+import UsersList from "../components/userList/UserList"; // Importar el componente UsersList
 
 export const Admin = () => {
   const [products, setProducts] = useState([]);
   const [activeTab, setActiveTab] = useState("list");
-   
 
   const handleAddProduct = (newProduct) => {
     setProducts([...products, newProduct]);
@@ -21,7 +21,7 @@ export const Admin = () => {
       <div className="flex">
         {/* Botones de pestañas */}
         <button
-          className={`px-4 py-2 mr-2 ${
+          className={`px-4 py-2  ${
             activeTab === "form" ? "bg-[#61005D] text-white" : "bg-gray-300"
           }`}
           onClick={() => handleTabClick("form")}
@@ -36,11 +36,21 @@ export const Admin = () => {
         >
           Lista de Productos
         </button>
+        {/* Nueva pestaña para el listado de usuarios */}
+        <button
+          className={`px-4 py-2 ${
+            activeTab === "users" ? "bg-[#61005D] text-white" : "bg-gray-300"
+          }`}
+          onClick={() => handleTabClick("users")}
+        >
+          Lista de Usuarios
+        </button>
       </div>
       {activeTab === "form" && <FormAdmin onAddProduct={handleAddProduct} />}
       {activeTab === "list" && (
         <ItemTable products={products} setProducts={setProducts} />
       )}
+      {activeTab === "users" && <UsersList />}
     </div>
   );
 };

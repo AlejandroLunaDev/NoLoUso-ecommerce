@@ -25,32 +25,36 @@ const userMongo = {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(credentials)
+                body: JSON.stringify(credentials),
+                credentials: 'include' // Enviar cookies en la solicitud
             });
-            const data = await response.json();
-            return data;
+            const userData = await response.json();
+            console.log('Respuesta del servidor:', userData);
+            console.log('Cookies recibidas:', document.cookie); // Revisa la respuesta del servidor
+            return userData;
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
             throw new Error('Error al iniciar sesión');
         }
     },
-
+        
     async logoutUser() {
         try {
             const response = await fetch(`${BASE_URL}/logout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include' // Enviar cookies en la solicitud
             });
             const data = await response.json();
+            console.log(data);
             return data;
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
             throw new Error('Error al cerrar sesión');
         }
     },
-
     async deleteUser(userId) {
         try {
             const response = await fetch(`${BASE_URL}/${userId}`, {
@@ -99,8 +103,22 @@ const userMongo = {
             throw new Error('Error al obtener usuario');
         }
     },
-
-    // Otros métodos para operaciones relacionadas con usuarios
+    async getAllUsers() {
+        try {
+            const response = await fetch(`${BASE_URL}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            return data.users;
+        } catch (error) {
+            console.error('Error al obtener la lista de usuarios:', error);
+            throw new Error('Error al obtener la lista de usuarios');
+        }
+    }
+    
 };
 
 export default userMongo;

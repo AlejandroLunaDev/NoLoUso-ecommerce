@@ -5,8 +5,10 @@ import { AppRoutes } from './routes/AppRoutes';
 
 export function App() {
   return (
+    <UserProvider>
       <CartProvider>
         <AppRoutes />
       </CartProvider>
+    </UserProvider>
   );
 }

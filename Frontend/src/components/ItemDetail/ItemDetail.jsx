@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Add, Remove } from "@/components";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+import { UserContext } from "../../context/UserContext";
 
 const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
   const [count, setCount] = useState(initial);
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const mostrarAlerta = () => {
     Toastify({
@@ -30,6 +33,11 @@ const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
     if (count > 0) setCount((prevCount) => prevCount - 1);
   };
 
+  const handleAddToCart = () => {
+    onAdd(count);
+    mostrarAlerta();
+  };
+
   return (
     <div className="flex justify-between">
       <button
@@ -47,15 +55,21 @@ const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
       >
         <Add />
       </button>
-      <button
-        className="bg-[#61005D] rounded text-center text-white py-1 px-2"
-        onClick={() => {
-          onAdd(count);
-          mostrarAlerta();
-        }}
-      >
-        Agregar al carrito
-      </button>
+      {user ? (
+        <button
+          className="bg-[#61005D] rounded text-center text-white py-1 px-2"
+          onClick={handleAddToCart}
+        >
+          Agregar al carrito
+        </button>
+      ) : (
+        <button
+          className="bg-[#61005D] rounded text-center text-white py-1 px-2"
+          onClick={() => navigate("/login")}
+        >
+          Agregar al carrito
+        </button>
+      )}
     </div>
   );
 };
@@ -72,6 +86,7 @@ export function ItemDetail({
   const { addItem, isInCart, cart } = useContext(CartContext);
   const [hasStock, setHasStock] = useState(stock > 0);
   const { itemId } = useParams();
+  const navigate = useNavigate();
 
   const handleOnAdd = (quantity) => {
     const objProductToAdd = {
@@ -115,12 +130,11 @@ export function ItemDetail({
           {hasStock ? (
             !isInCart(itemId) ? (
               <ItemCount onAdd={handleOnAdd} stock={stock} />
-              ) : (
-                <div className="bg-[#61005D] rounded text-center text-white py-1">
-                <Link to="/">Seguir Comprando</Link>
+            ) : (
+              <div className="bg-[#61005D] rounded text-center text-white py-1">
+                 <Link to="/cart">Seguir Comprando</Link>
               </div>
-              
-              )
+            )
           ) : (
             <div className="bg-red-500 text-white rounded px-2 py-1">
               No hay stock de este producto

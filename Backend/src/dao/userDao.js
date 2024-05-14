@@ -46,6 +46,16 @@ class UserDao {
             throw new Error('Error al editar el usuario');
         }
     }
+
+    async getAllUsers() {
+        try {
+            const users = await userModel.find().select('first_name last_name email online');
+            return users;
+        } catch (error) {
+            throw new Error('Error al obtener la lista de usuarios');
+        }
+    }
+    
 }
 
 export default new UserDao();

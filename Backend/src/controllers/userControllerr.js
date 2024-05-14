@@ -21,6 +21,7 @@ class UserController {
             const { email, password } = req.body;
             const user = await userDao.getUserByEmail(email);
             if (user && user.password === password) {
+                res.cookie('userId', user._id,{maxAge: 1000 * 60 * 60 * 24, httpOnly: true,signed: true});
                 res.status(200).json({ message: 'Inicio de sesión exitoso', user });
             } else {
                 res.status(404).json({ error: 'Usuario no encontrado o contraseña incorrecta' });
@@ -29,25 +30,16 @@ class UserController {
             res.status(500).json({ error: 'Error al iniciar sesión' });
         }
     }
+    
 
-    async logoutUser(req, res) {
+                async logoutUser(req, res) {
         try {
-            if (req.session) {
-                req.session.destroy((err) => {
-                    if (err) {
-                        res.status(500).json({ error: 'Error al cerrar sesión' });
-                    } else {
-                        res.status(200).json({ message: 'Sesión cerrada correctamente' });
-                    }
-                });
-            } else {
-                res.status(400).json({ error: 'No hay sesión activa para cerrar' });
-            }
+            res.clearCookie('userId'); // Eliminar la cookie userId
+            res.status(200).json({ message: 'Sesión cerrada correctamente' });
         } catch (error) {
             res.status(500).json({ error: 'Error al cerrar sesión' });
         }
-    }
-    async deleteUser(req, res) {
+    }    async deleteUser(req, res) {
         const userId = req.params.id;
         try {
             const deletedUser = await userDao.deleteUser(userId);
@@ -67,6 +59,16 @@ class UserController {
             res.status(500).json({ error: 'Error al editar el usuario' });
         }
     }
+
+    async getAllUsers(req, res) {
+        try {
+            const users = await userDao.getAllUsers();
+            res.status(200).json({ users });
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener la lista de usuarios' });
+        }
+    }
+    
 }
 
 export default new UserController();

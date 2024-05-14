@@ -1,10 +1,24 @@
-import React, { createContext, useState } from 'react';
-import userMongo from '../service/db/usersMongo'; // Importa el archivo userMongo.js que contiene las funciones de manejo de usuarios
+import React, { createContext, useState, useEffect } from 'react';
+import userMongo from '../service/db/usersMongo'; 
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userList = await userMongo.getAllUsers();
+        setUsers(userList);
+      } catch (error) {
+        console.error('Error al obtener la lista de usuarios:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const login = async (credentials) => {
     try {
@@ -29,7 +43,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, users, login, logout }}>
       {children}
     </UserContext.Provider>
   );
