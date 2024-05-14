@@ -9,8 +9,8 @@ import session from "express-session";
  // Agregamos la dependencia de seguridad Helmet
 
 // Importar rutas
-import productRouter from "./routes/productsRouter.js";
-import userRouter from "./routes/userRouter.js";
+import productRouter from "./product/routes/productsRouter.js";
+import userRouter from "./profile/routes/userRouter.js";
 
 const app = express();
 const httpServer = app.listen(config.PORT, () => {
