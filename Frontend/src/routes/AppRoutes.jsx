@@ -1,12 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { UserProvider } from '../context/UserContext';
-import { Navbar } from '../layout/Navbar';
-import { Footer } from '../layout/Footer';
-import { Error404, Home, Admin, Chat, Login } from '../pages';
-import { ItemlistContainer } from '../components/ItemListContainer/ItemlistContainer';
-import { ItemDetailContainer } from '../components/ItemDetailcontainer/ItemDetailContainer';
-import { CheckOut } from '../pages/CheckOut';
+import { Navbar } from '../layout/components/navbar/Navbar';
+import { Footer } from '../layout/components/Footer';
+import { Home } from '../layout/pages/Home';
+import { Login } from '../auth/pages/Login';
+import { Error404 } from '../layout/pages/Error404';
+import { Admin } from '../admin/pages/Admin';
+import { Chat} from '../chat/pages/Chat';
+import { ItemlistContainer, ItemDetailContainer } from '../product/components';
+
+import { CheckOut } from '../checkOut/pages/CheckOut';
+import ProtectedRoutes from './ProtectedRoutes';
 
 export function AppRoutes() {
   return (
@@ -30,19 +34,15 @@ function MainLayout() {
         <Route path="/home" element={<Home />} />
         <Route path="/categoria/:categoryId" element={<ItemlistContainer />} />
         <Route path="/search/:categoria" element={<ItemlistContainer />} />
-        {/* ItemDetailContainer no requiere autenticación */}
         <Route path="/product/:itemId" element={<ItemDetailContainer />} />
-        <Route path="/CheckOut" element={<PrivateRoute element={<CheckOut />} />} />
-        <Route path="/admin" element={<PrivateRoute element={<Admin />} />} />
-        <Route path="/chat" element={<PrivateRoute element={<Chat />} />} />
+        <Route path="/CheckOut" element={<ProtectedRoutes element={<CheckOut />} />} />
+        <Route path="/admin" element={<ProtectedRoutes element={<Admin />} />} />
+        <Route path="/chat" element={<ProtectedRoutes element={<Chat />} />} />
       </Routes>
     </>
   );
 }
 
-// PrivateRoute solo para rutas que requieren autenticación
-function PrivateRoute({ element }) {
-  // No se verifica el estado de inicio de sesión para ItemDetailContainer
-  return element;
-}
+
+
 

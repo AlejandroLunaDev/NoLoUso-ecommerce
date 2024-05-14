@@ -1,6 +1,6 @@
 import React from 'react';
-import { UserProvider } from './context/UserContext';
-import { CartProvider } from './context/CartContext';
+import { UserProvider } from './auth/context/UserContext';
+import { CartProvider } from './cart/context/CartContext';
 import { AppRoutes } from './routes/AppRoutes';
 
 export function App() {
