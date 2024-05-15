@@ -4,13 +4,13 @@ import config from "./configs/config.js";
 import cors from "cors";
 import { connectDB } from "./db/mongoDb.js";
 import socketConfig from "./configs/socketConfig.js";
-import cookieParser from "cookie-parser";
-import session from "express-session";
- // Agregamos la dependencia de seguridad Helmet
+import AuthUserRouter from "./auth/routes/AuthUserRouter.js";
+
 
 // Importar rutas
 import productRouter from "./product/routes/productsRouter.js";
 import userRouter from "./profile/routes/userRouter.js";
+
 
 const app = express();
 const httpServer = app.listen(config.PORT, () => {
@@ -31,21 +31,15 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
-app.use(cookieParser("CoderS3cR"));
-app.use(session({
-  secret: "CoderS3cR",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24
-  }
-}))
+
 
 
 
 // Rutas
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/auth", AuthUserRouter);
+
 
 // Configurar Socket.io
 socketConfig(httpServer);

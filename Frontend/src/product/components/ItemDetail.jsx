@@ -4,12 +4,12 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Add, Remove } from "@/common/components";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-import { UserContext } from "@/auth/context/UserContext";
+import { AuthContext } from "@/auth/context/AuthProvider";
 
 const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
   const [count, setCount] = useState(initial);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
 
   const mostrarAlerta = () => {
     Toastify({

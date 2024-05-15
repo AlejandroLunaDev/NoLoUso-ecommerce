@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import LoginForm from '../components/LoginForm';
-import { UserContext } from '../context/UserContext';
+import { AuthContext } from '../context/AuthProvider';
 
 export function Login() {
-  const { user, login, logout } = useContext(UserContext); 
+  const { user, login, logout } = useContext(AuthContext); 
 
   return (
     <section className='flex items-center justify-center h-dvh'>

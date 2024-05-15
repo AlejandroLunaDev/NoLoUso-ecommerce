@@ -1,14 +1,16 @@
 import React from 'react';
-import { UserProvider } from './auth/context/UserContext';
+
 import { CartProvider } from './cart/context/CartContext';
 import { AppRoutes } from './routes/AppRoutes';
+import { AuthProvider } from './auth/context/AuthProvider';
 
 export function App() {
   return (
-    <UserProvider>
+    <AuthProvider>
       <CartProvider>
         <AppRoutes />
       </CartProvider>
-    </UserProvider>
+    </AuthProvider>
+
   );
 }

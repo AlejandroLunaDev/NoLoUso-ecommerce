@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { routes } from "@/routes/routes";
 import { GrUserAdmin, GrUserExpert } from "react-icons/gr";
-import { UserContext } from "../context/UserContext";
+import { AuthContext } from "../context/AuthProvider";
 
 export const UserLogin = () => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from '../context/UserContext';
+import { AuthContext } from '../context/AuthProvider';
 import RegisterForm from './RegisterForm'; 
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router'; 
 
 const LoginForm = () => {
-  const { login } = useContext(UserContext); 
+  const { login } = useContext(AuthContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

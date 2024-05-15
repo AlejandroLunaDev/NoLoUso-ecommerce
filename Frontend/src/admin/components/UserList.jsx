@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { UserContext } from "@/auth/context/UserContext";
+import { AuthContext } from "@/auth/context/AuthProvider";
 
 const UsersList = () => {
-  const { users } = useContext(UserContext);
+  const { users } = useContext(AuthContext);
 console.log(users)
   return (
     <div>

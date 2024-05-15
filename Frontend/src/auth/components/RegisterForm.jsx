@@ -1,5 +1,5 @@
 import { useState } from "react";
-import userMongo from "@/service/db/usersMongo";
+import userAuth from "../../service/db/usersAuth";
 
 const RegisterForm = ({ onClose }) => {
   const [first_name, setFirst_name] = useState("");
@@ -12,7 +12,7 @@ const RegisterForm = ({ onClose }) => {
     e.preventDefault();
     try {
       const userData = { first_name, last_name, email, password };
-      const data = await userMongo.createUser(userData);
+      const data = await userAuth.createUser(userData);
       console.log(data);
       onClose();
     } catch (error) {

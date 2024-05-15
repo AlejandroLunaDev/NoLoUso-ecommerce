@@ -1,9 +1,10 @@
-const BASE_URL = 'http://localhost:8080/api/users'; 
+const BASE_URL_PROFILE = 'http://localhost:8080/api/users';
+const BASE_URL_AUTH = 'http://localhost:8080/api/auth'; 
 
-const userMongo = {
+const userAuth = {
     async createUser(userData) {
         try {
-            const response = await fetch(`${BASE_URL}/register`, {
+            const response = await fetch(`${BASE_URL_AUTH}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -20,7 +21,7 @@ const userMongo = {
 
     async loginUser(credentials) {
         try {
-            const response = await fetch(`${BASE_URL}/login`, {
+            const response = await fetch(`${BASE_URL_AUTH}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,8 +30,6 @@ const userMongo = {
                 credentials: 'include' // Enviar cookies en la solicitud
             });
             const userData = await response.json();
-            console.log('Respuesta del servidor:', userData);
-            console.log('Cookies recibidas:', document.cookie); // Revisa la respuesta del servidor
             return userData;
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
@@ -40,7 +39,7 @@ const userMongo = {
         
     async logoutUser() {
         try {
-            const response = await fetch(`${BASE_URL}/logout`, {
+            const response = await fetch(`${BASE_URL_PROFILE}/logout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -57,7 +56,7 @@ const userMongo = {
     },
     async deleteUser(userId) {
         try {
-            const response = await fetch(`${BASE_URL}/${userId}`, {
+            const response = await fetch(`${BASE_URL_PROFILE}/${userId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,7 +72,7 @@ const userMongo = {
 
     async updateUser(userId, userData) {
         try {
-            const response = await fetch(`${BASE_URL}/${userId}`, {
+            const response = await fetch(`${BASE_URL_PROFILE}/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,7 +89,7 @@ const userMongo = {
 
     async getUser(userId) {
         try {
-            const response = await fetch(`${BASE_URL}/${userId}`, {
+            const response = await fetch(`${BASE_URL_PROFILE}/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -105,7 +104,7 @@ const userMongo = {
     },
     async getAllUsers() {
         try {
-            const response = await fetch(`${BASE_URL}`, {
+            const response = await fetch(`${BASE_URL_PROFILE}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -121,4 +120,4 @@ const userMongo = {
     
 };
 
-export default userMongo;
+export default userAuth;

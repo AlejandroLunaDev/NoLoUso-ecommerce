@@ -10,3 +10,5 @@ router.put('/:id', ProductController.updateProduct.bind(ProductController));
 router.delete('/:id', ProductController.deleteProduct.bind(ProductController));
 
 export default router;
+
+
