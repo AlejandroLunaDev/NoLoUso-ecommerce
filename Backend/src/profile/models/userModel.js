@@ -1,5 +1,8 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
+import { generateAccessToken, generateRefreshToken } from "../../auth/utils/jwt.js";
+import Token from "../../auth/utils/token.js";
+import getUserInfo from "../../auth/utils/getUserInfo.js";
 
 const userCollection = "users";
 
@@ -71,10 +74,16 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.createAccessToken = function () {
-  
+  return generateAccessToken(getUserInfo(this)) 
 }
-userSchema.methods.createRefreshToken = function () {
-  
+userSchema.methods.createRefreshToken = async function () {
+  const refreshToken = generateRefreshToken(getUserInfo(this))
+  try {
+    await new Token({token: refreshToken}).save()
+    return refreshToken
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const userModel = model(userCollection, userSchema);

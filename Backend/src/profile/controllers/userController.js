@@ -1,14 +1,7 @@
 import userDao from '../dao/userDao.js';
 
 class UserController {
-    async logoutUser(req, res) {
-        try {
-            res.clearCookie('userId');
-            res.status(200).json({ message: 'Sesión cerrada correctamente' });
-        } catch (error) {
-            res.status(500).json({ error: 'Error al cerrar sesión' });
-        }
-    }    
+
     
     async deleteUser(req, res) {
         const userId = req.params.id;

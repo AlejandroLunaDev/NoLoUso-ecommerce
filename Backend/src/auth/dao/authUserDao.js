@@ -22,6 +22,8 @@ class AuthUserDao {
             throw new Error('Error al crear el usuario de autenticación');
         }
     }
+
+
 }
 
 export default new AuthUserDao();

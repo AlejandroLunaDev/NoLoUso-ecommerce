@@ -18,6 +18,7 @@ const LoginForm = () => {
     try {
       const credentials = { email, password };
       const data = await login(credentials);
+      sessionStorage.setItem('refreshToken', data.refreshToken);
       navigate('/');
    
     } catch (error) {
