@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./public/nlufavicon.svg" height="200">
+    <img src="./public/nlufavicon.svg" height="150">
 </div>
 
 # Proyecto Ecommerce NoLoUso
@@ -11,14 +11,10 @@
 **NoLoUso** es una aplicación de ecommerce Full-Stack desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Este proyecto permite la compra y venta de productos usados, proporcionando una plataforma intuitiva tanto para usuarios comunes (USER) como para administradores (ADMIN).
 
 Los usuarios pueden explorar productos, agregarlos al carrito y realizar compras. Los administradores tienen capacidades adicionales para gestionar productos, categorías y usuarios del sistema, asegurando un ambiente controlado y seguro.
-
 ## Tecnologías Utilizadas
 
-- ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-- ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-- ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
-- ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-- ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+
 
 ## Características
 
@@ -54,26 +50,22 @@ npm run start:frontend:prod
 
 Para usar la aplicación, sigue estos pasos:
 
-Inicio de Sesión: Regístrate o inicia sesión como usuario o administrador.
-Explorar Productos: Navega por la lista de productos disponibles.
-Gestión de Productos: (Solo administradores) Agrega, edita o elimina productos.
-Carrito de Compras: Agrega productos al carrito y procede a la compra.
-Finalizar Compra: Usa la pasarela de pago integrada para completar la compra.
-
-##Contribución
+1. **Inicio de Sesión:** Regístrate o inicia sesión como usuario o administrador.
+2. **Explorar Productos:** Navega por la lista de productos disponibles.
+3. **Gestión de Productos:** (Solo administradores) Agrega, edita o elimina productos.
+4. **Carrito de Compras:** Agrega productos al carrito y procede a la compra.
+5. **Finalizar Compra:** Usa la pasarela de pago integrada para completar la compra.
 
 
-Tu README.md ya tiene una buena estructura y detalles clave. Sin embargo, aquí hay algunas mejoras que pueden hacerlo aún más profesional:
+## Contribución
 
-Agregar una sección de 'Tabla de Contenidos' para facilitar la navegación.
-Añadir más detalles en la sección de instalación para asegurarse de que los pasos sean claros para cualquier desarrollador.
-Incluir una sección de 'Configuración' para explicar cómo configurar variables de entorno o cualquier otra configuración necesaria.
-Proveer un ejemplo de cómo iniciar la aplicación después de la instalación.
-Agregar una sección de 'Licencia' y mejorar la referencia al autor.
-Incluir un archivo LICENSE si no lo tienes ya.
-Añadir un ejemplo de uso con capturas de pantalla, si es posible.
-Proveer enlaces adicionales a la documentación, tutoriales o recursos relacionados.
-Aquí tienes una versión mejorada de tu README.md:
+Si deseas contribuir al proyecto, por favor sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
+3. Realiza tus cambios y haz commit (`git commit -m 'Agrega nueva funcionalidad'`).
+4. Sube tus cambios (`git push origin feature/nueva-funcionalidad`).
+5. Abre un Pull Request.
 
 ## Autor
 
