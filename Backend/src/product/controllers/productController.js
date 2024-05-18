@@ -14,7 +14,8 @@ class ProductController {
 
   async getAllProducts(req, res) {
     try {
-      const sortOrder = req.query.sort || 'desc'; 
+      const sortOrder = req.query.sort || 'desc';
+      console.log('sortOrder recibido en el backend:', sortOrder);  
       const products = await ProductDaoMongo.get(sortOrder); 
       res.status(200).json(products);
     } catch (error) {
