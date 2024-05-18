@@ -2,11 +2,14 @@ const BASE_URL = import.meta.env.VITE_BACK_PORT || 'https://nolouso-ecommerce-pr
 console.log('el puerto obtenido es:', BASE_URL)
 export const getAllProducts = async (sortOrder = 'desc') => {
   try {
-    const response = await fetch(`${BASE_URL}/api/products?sort=${sortOrder}`);
+    const url = `${BASE_URL}/api/products?sort=${sortOrder}`;
+    console.log('Realizando solicitud a:', url); // Agregar esta línea para depuración
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Error al obtener los productos');
     }
     const data = await response.json();
+    console.log('Datos obtenidos:', data); // Agregar esta línea para depuración
     return data; 
   } catch (error) {
     console.error('Error al obtener los productos:', error);
