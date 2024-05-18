@@ -1,5 +1,5 @@
-const BASE_URL_PROFILE = "http://localhost:8080/api/users";
-const BASE_URL_AUTH = "http://localhost:8080/api/auth";
+const BASE_URL_PROFILE = `${import.meta.env.VITE_BACK_PORT}/api/users`;
+const BASE_URL_AUTH = `${import.meta.env.VITE_BACK_PORT}/api/auth`;
 
 const userAuth = {
   async createUser(userData) {

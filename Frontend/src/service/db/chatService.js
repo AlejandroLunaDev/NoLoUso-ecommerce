@@ -1,4 +1,4 @@
-const BASE_URL_CHAT = "http://localhost:8080/api/messages";
+const BASE_URL_CHAT = `${import.meta.env.VITE_BACK_PORT}/api/messages`;
 
 const chatService = {
   async createMessage(messageData) {
