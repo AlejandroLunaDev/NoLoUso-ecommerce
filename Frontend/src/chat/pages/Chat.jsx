@@ -79,7 +79,7 @@ export const Chat = () => {
 
   return (
     <div className="flex h-dvh">
-      <div className="w-1/4 p-4">
+      <div className="w-1/5 p-4">
         <h1 className="text-lg font-bold mb-4">Usuarios</h1>
         <ul>
           {usersList.map((userItem) => (
@@ -95,11 +95,11 @@ export const Chat = () => {
           ))}
         </ul>
       </div>
-      <article className="w-3/4 bg-gray-300 p-4">
+      <article className="w-3/4  p-4">
         <header>
-          <h1 className="text-lg font-bold mb-4">Chat</h1>
+          <h1 className=" text-lg font-bold mb-4">Chat</h1>
         </header>
-        <div className="chat-messages mb-2 h-96 overflow-auto">
+        <div className="chat-messages mb-2 h-4/6 overflow-auto border border-[#61005D] rounded-md p-4">
           {messages.map((msg) => (
             <p key={msg._id} className="mb-2">
               <strong>{getSenderName(msg.sender)}: </strong>
@@ -107,18 +107,19 @@ export const Chat = () => {
             </p>
           ))}
         </div>
-        <div className="chat-input">
+        <div className="chat-input flex gap-2">
           <input
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyPress}
-            className="w-full p-2"
+            className="w-full rounded-xl p-2 border border-[#61005D]"
             disabled={sending}
+            placeholder="Escribe un mensaje..."
           />
           <button
             onClick={sendMessage}
-            className="p-2 bg-blue-500 text-white"
+            className="p-2 bg-[#61005D] text-white rounded-xl"
             disabled={sending}
           >
             Enviar
