@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BACK_PORT;
+const BASE_URL = import.meta.env.VITE_BACK_PORT || 'https://nolouso-ecommerce-production.up.railway.app' ;
 console.log('el puerto obtenido es:', BASE_URL)
 export const getAllProducts = async (sortOrder = 'desc') => {
   try {

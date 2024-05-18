@@ -38,7 +38,6 @@ class ProductDaoMongo {
   static async get(sortBy = 'desc') {
     try {
       let sortOrder = sortBy === 'asc' ? 1 : -1;
-      console.log(`Obteniendo todos los productos ordenados por fecha (${sortBy})...`);
       return await productModel.find().sort({ created_at: sortOrder }).exec();
     } catch (error) {
       throw new Error('Error al obtener los productos');
