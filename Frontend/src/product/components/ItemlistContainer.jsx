@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
 import { ItemList } from "./ItemList";
+import { useAsync } from "@/common/hook/useAsync";
+import { memo } from "react";
 import { getAllProducts } from "@/service/db/productsMongo";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+const ItemListMemoized = memo(ItemList);
 
 export function ItemlistContainer({ greeting }) {
   const { categoryId } = useParams();
@@ -12,38 +16,25 @@ export function ItemlistContainer({ greeting }) {
   if (isSearchPage) {
     categoryToFetch = location.pathname.split("/search/")[1];
   }
-
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getAllProducts();
-        setProducts(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [categoryToFetch]); // Solo vuelve a ejecutar la solicitud si cambia la categoría
+  const asyncFunction = () => getAllProducts();
+  const {
+    data: products,
+    loading,
+    error,
+  } = useAsync(asyncFunction, []);
 
   if (loading) {
     return <h1>Se están cargando los productos...</h1>;
   }
 
-  if (error || !products || !products.length) {
+  if (error || !products || !products.length) { // Verificar si hay un error o si los datos no están definidos o vacíos
     return <h1>Hubo un error al cargar los productos</h1>;
   }
 
   return (
     <div className="item-list-container">
       <h2 className="my-4 font-bold">Nuestros Productos</h2>
-      <ItemList products={products} />
+      <ItemListMemoized products={products} />
     </div>
   );
 }

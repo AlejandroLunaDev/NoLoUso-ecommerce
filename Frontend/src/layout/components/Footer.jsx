@@ -4,26 +4,11 @@ import {
   SlSocialLinkedin,
   SlSocialFacebook
 } from "react-icons/sl";
-import { getAllProducts } from "@/service/db/productsMongo";
 import { NavLink, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 import { useAsync } from "@/common/hook/useAsync";
 useAsync
 export function Footer() {
-  const [uniqueCategories, setUniqueCategories] = useState([]);
-  const { categoryId } = useParams()
-  const asyncFunction = () =>  getAllProducts(categoryId)
-  const { data: products, loading, error } = useAsync(asyncFunction, [categoryId])
-
-  useEffect(() => {
-    if (products && products.length > 0) {
-      const categoriesSet = new Set(products.map(product => product.category));
-      setUniqueCategories(Array.from(categoriesSet));
-    }
-  }, [products]);
-
-
-
 
 
   const handleCategoryClick = async () => {};
