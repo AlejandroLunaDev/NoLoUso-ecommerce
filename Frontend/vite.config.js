@@ -2,11 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  /* server : {
-    port: import.meta.env.VITE_PORT || 5173,
-  }, */
+  server : {
+    port: 8080
+  },
   plugins: [react()],
   resolve: {
     alias: {
