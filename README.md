@@ -11,6 +11,9 @@
 **NoLoUso** es una aplicación de ecommerce Full-Stack desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Este proyecto permite la compra y venta de productos usados, proporcionando una plataforma intuitiva tanto para usuarios comunes (USER) como para administradores (ADMIN).
 
 Los usuarios pueden explorar productos, agregarlos al carrito y realizar compras. Los administradores tienen capacidades adicionales para gestionar productos, categorías y usuarios del sistema, asegurando un ambiente controlado y seguro.
+
+**Visita** https://no-lo-uso-ecommerce.vercel.app/
+
 ## Tecnologías Utilizadas
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
@@ -30,7 +33,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto localmente:
 
 ```bash
 # Clona el repositorio
-git clone https://github.com/tu-usuario/nolouso-ecommerce.git
+git clone https://github.com/AlejandroLunaDev/NoLoUso-ecommerce.git
 
 # Navega al directorio del proyecto
 cd nolouso-ecommerce
@@ -42,8 +45,14 @@ npm install
 npm run build:frontend
 npm run build:backend
 
-# Inicia el frontend en modo producción
-npm run start:frontend:prod
+# Inicia el frontend en modo dev
+npm run dev:frontend
+
+# Inicia el backend en modo dev
+npm run dev:backend
+
+# Inicia el backend y frontend en modo dev
+npm run dev
 ```
 
 ## Uso
