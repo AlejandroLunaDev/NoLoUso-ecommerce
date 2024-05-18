@@ -1,3 +1,4 @@
+// messageModel.js
 import { Schema, model } from "mongoose";
 
 const collection = "messages";
@@ -5,30 +6,15 @@ const collection = "messages";
 const messageSchema = new Schema({
   sender: {
     type: Schema.Types.ObjectId,
-    ref: "Users",
-    required: true,
+    ref: 'User',
+    required: true
   },
   recipient: {
     type: Schema.Types.ObjectId,
-    ref: "Users",
-    required: true,
+    ref: 'User',
   },
-  content: {
-    type: String,
-    required: true,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-  isRead: {
-    type: Boolean,
-    default: false,
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false,
-  }
+  message: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now }  // Añadido para tener un timestamp
 });
 
 export const messageModel = model(collection, messageSchema);

@@ -1,5 +1,5 @@
-// socketHandler.js
-import { createMessage } from "../../chat/dao/messageDao.js";
+// /path/to/socketHandler.js
+import messageController from "../../chat/controllers/messageController.js"; // Importa la instancia
 
 const onlineUsers = new Map();
 
@@ -7,16 +7,15 @@ const socketHandler = (io) => {
   io.on("connection", (socket) => {
     console.log("Nuevo cliente conectado");
 
-    socket.on("joinRoom", (user) => {
+    socket.on("joinChat", (user) => {
       onlineUsers.set(socket.id, user);
       io.emit("userList", Array.from(onlineUsers.values()));
     });
 
     socket.on("chatMessage", async (messageData) => {
       try {
-        const message = await createMessage(messageData);
-        io.to(messageData.recipient).emit("chatMessage", message);
-        io.to(messageData.sender).emit("chatMessage", message);
+        const message = await messageController.handleSocketMessage(messageData);
+        io.emit("chatMessage", message);  // Emitir el mensaje a todos los clientes conectados
       } catch (error) {
         console.error("Error al enviar el mensaje: ", error);
       }

@@ -1,11 +1,10 @@
-// messageRouter.js
 import express from "express";
-import { postMessage, getAllMessages, getUserMessages } from "../controllers/messageControler.js";  
+import messageController from "../controllers/messageController.js"; // Asegúrate de importar la instancia
 
 const router = express.Router();
 
-router.post("/", postMessage);
-router.get("/", getAllMessages);
-router.get("/:userId", getUserMessages);
+router.post("/", messageController.postMessage.bind(messageController)); // Usar bind
+router.get("/", messageController.getAllMessages.bind(messageController)); // Usar bind
+router.get("/:userId", messageController.getUserMessages.bind(messageController)); // Usar bind
 
 export default router;

@@ -1,51 +1,79 @@
+// /path/to/ChatComponent.jsx
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useAuth } from "../../auth/context/AuthProvider";
+import chatService from "../../service/db/chatService";
 
 const socket = io("http://localhost:8080");
 
 export const Chat = () => {
-  const { user, usersList } = useAuth(); 
+  const { user, usersList } = useAuth();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [recipient, setRecipient] = useState(""); // Nueva variable para manejar el destinatario seleccionado
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      socket.emit("joinRoom", user);
-      setUsers((prevUsers) => {
-        if (!prevUsers.includes(user)) {
-          return [...prevUsers, user];
+    socket.emit("joinChat", user._id);
+
+    const fetchMessages = async () => {
+      try {
+        const fetchedMessages = await chatService.getMessages();
+        if (Array.isArray(fetchedMessages)) {
+          setMessages(fetchedMessages);
+        } else {
+          console.error("API response is not an array of messages:", fetchedMessages);
         }
-        return prevUsers;
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+
+    fetchMessages();
+
+    socket.on("chatMessage", (message) => {
+      setMessages((prevMessages) => {
+        if (!prevMessages.some((msg) => msg._id === message._id)) {
+          return [...prevMessages, message];
+        }
+        return prevMessages;
       });
-    }
-
-    socket.on("chatMessage", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    });
-
-    socket.on("userList", (userList) => {
-      setUsers(userList);
     });
 
     return () => {
-      // socket.disconnect();
+      socket.off("chatMessage");
     };
-  }, [user]);
+  }, [user._id]);
 
-  const sendMessage = () => {
-    if (message && recipient) {
-      const messageData = {
-        sender: user._id,
-        recipient: recipient,
-        content: message,
-        timestamp: new Date()
-      };
-      socket.emit("chatMessage", messageData);
+  const sendMessage = async () => {
+    if (message.trim() === "" || sending) return;
+
+    setSending(true);
+    const messageData = {
+      sender: user._id,
+      message: message.trim(),
+      timestamp: new Date(),
+    };
+
+    try {
+      const savedMessage = await chatService.createMessage(messageData);
       setMessage("");
+      socket.emit("chatMessage", savedMessage);
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setSending(false);
     }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  const getSenderName = (senderId) => {
+    const sender = usersList.find((user) => user._id === senderId);
+    return sender ? sender.first_name : "Desconocido";
   };
 
   return (
@@ -53,10 +81,15 @@ export const Chat = () => {
       <div className="w-1/4 p-4">
         <h1 className="text-lg font-bold mb-4">Usuarios</h1>
         <ul>
-          {usersList.map((user, index) => (
-            <li key={index} onClick={() => setRecipient(user._id)}>
-              <span className="inline-block w-2 h-2 rounded-full mr-2" style={{ backgroundColor: user.online ? 'green' : 'gray' }}></span>
-              {user.first_name}
+          {usersList.map((userItem) => (
+            <li key={userItem._id} style={{ cursor: "pointer" }}>
+              <span
+                className="inline-block w-2 h-2 rounded-full mr-2"
+                style={{
+                  backgroundColor: userItem.online ? "green" : "gray",
+                }}
+              ></span>
+              {userItem.first_name}
             </li>
           ))}
         </ul>
@@ -65,11 +98,11 @@ export const Chat = () => {
         <header>
           <h1 className="text-lg font-bold mb-4">Chat</h1>
         </header>
-        <div className="chat-messages mb-2">
-          {messages.map((msg, index) => (
-            <p key={index} className="mb-2">
-              <strong>{msg.sender.first_name}: </strong>
-              {msg.content}
+        <div className="chat-messages mb-2 h-96 overflow-auto">
+          {messages.map((msg) => (
+            <p key={msg._id} className="mb-2">
+              <strong>{getSenderName(msg.sender)}: </strong>
+              {msg.message}
             </p>
           ))}
         </div>
@@ -78,11 +111,21 @@ export const Chat = () => {
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyPress}
             className="w-full p-2"
+            disabled={sending}
           />
-          <button onClick={sendMessage} className="p-2 bg-blue-500 text-white">Enviar</button>
+          <button
+            onClick={sendMessage}
+            className="p-2 bg-blue-500 text-white"
+            disabled={sending}
+          >
+            Enviar
+          </button>
         </div>
       </article>
     </div>
   );
 };
+
+export default Chat;

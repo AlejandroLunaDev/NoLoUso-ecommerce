@@ -1,5 +1,9 @@
-import { useContext, createContext, useState, useEffect, useCallback } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+// AuthProvider.js
+import React, { useContext, createContext, useState, useEffect, useCallback } from "react";
 import userAuth from "../../service/db/usersAuth";
+
+
 
 export const AuthContext = createContext();
 
@@ -33,6 +37,9 @@ export const AuthProvider = ({ children }) => {
 
         initializeAuth();
     }, [refreshToken]);
+
+  
+    
 
     const login = async (credentials) => {
         try {
@@ -92,7 +99,7 @@ export const AuthProvider = ({ children }) => {
     }, [accessToken]);
 
     return (
-        <AuthContext.Provider value={{ isAuth, setIsAuth, user, setUser, login, logout, accessToken, refreshToken, usersList, fetchUsersList }}>
+        <AuthContext.Provider value={{ isAuth, setIsAuth, user, setUser, login, logout, accessToken, refreshToken, usersList, setUsersList, fetchUsersList }}>
             {children}
         </AuthContext.Provider>
     );
