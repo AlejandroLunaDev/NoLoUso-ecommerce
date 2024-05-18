@@ -14,6 +14,7 @@ import messageRouter from "./chat/routes/messageRoutes.js";
 
 dotenv.config();
 const app = express();
+console.log("El puerto obtenido del entorno es:", process.env.PORT);
 const httpServer = app.listen(config.PORT, () => {
   console.log(`Servidor en ejecución en el puerto http://localhost:${config.PORT}`);
 });
