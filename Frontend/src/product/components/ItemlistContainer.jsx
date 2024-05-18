@@ -21,13 +21,13 @@ export function ItemlistContainer({ greeting }) {
     data: products,
     loading,
     error,
-  } = useAsync(asyncFunction, []); 
+  } = useAsync(asyncFunction, []);
 
   if (loading) {
     return <h1>Se están cargando los productos...</h1>;
   }
 
-  if (error) {
+  if (error || !products || !products.length) { // Verificar si hay un error o si los datos no están definidos o vacíos
     return <h1>Hubo un error al cargar los productos</h1>;
   }
 

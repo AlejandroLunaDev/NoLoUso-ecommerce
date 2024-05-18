@@ -12,7 +12,7 @@ export function ItemDetailContainer() {
     return <h1>Se está cargando el producto...</h1>;
   }
 
-  if (error) {
+  if (error || !product) { // Verificar si hay un error o si los datos del producto no están definidos
     return <h1>Hubo un error obteniendo el producto.</h1>;
   }
 
