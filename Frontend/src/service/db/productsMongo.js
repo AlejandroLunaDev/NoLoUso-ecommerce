@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_BACK_PORT;
-
+console.log(BASE_URL)
 export const getAllProducts = async (sortOrder) => {
   try {
     const response = await fetch(`${BASE_URL}/api/products?sort=${sortOrder}`);

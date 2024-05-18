@@ -1,10 +1,11 @@
-// /path/to/ChatComponent.jsx
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useAuth } from "../../auth/context/AuthProvider";
 import chatService from "../../service/db/chatService";
 
-const socket = io("http://localhost:8080");
+const socketURL = import.meta.env.PROD ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL;
+
+const socket = io(socketURL);
 
 export const Chat = () => {
   const { user, usersList } = useAuth();
