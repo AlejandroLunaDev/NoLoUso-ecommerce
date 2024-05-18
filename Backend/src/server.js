@@ -1,10 +1,9 @@
-import * as url from 'url';
-import dotenv from 'dotenv';
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
 import { connectDB } from "./db/mongoDb.js";
 import socketConfig from "./configs/socketConfig.js";
+import config from './configs/config.js';
 
 // Import routes
 import productRouter from "./product/routes/productsRouter.js";
@@ -12,22 +11,13 @@ import userRouter from "./profile/routes/userRouter.js";
 import authRouter from "./auth/routes/AuthUserRouter.js";
 import messageRouter from "./chat/routes/messageRoutes.js";
 
-dotenv.config();
-
-const config = {
-  LOCAL_PORT: process.env.LOCAL_PORT || 8080,
-  PRODUCTION_URL: process.env.PRODUCTION_URL,
-  DIRNAME: url.fileURLToPath(new URL('.', import.meta.url)),
-  MONGO_URI: process.env.MONGO_URI,
-};
-
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
-const port = isProduction ? config.PRODUCTION_URL : config.LOCAL_PORT;
+const port = config.LOCAL_PORT;
 
 console.log("Listening on port " + port);
 
-const httpServer = app.listen(isProduction ? config.LOCAL_PORT : port, () => {
+const httpServer = app.listen(port, () => {
   console.log(`Server running on ${isProduction ? config.PRODUCTION_URL : `http://localhost:${port}`}`);
 });
 
@@ -38,6 +28,7 @@ const origin = isProduction
   ? 'https://no-lo-uso-ecommerce.vercel.app'
   : `http://localhost:5173`;
 console.log(`Origin: ${origin}`);
+
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
