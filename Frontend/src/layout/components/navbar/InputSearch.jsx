@@ -47,7 +47,7 @@ export function InputSearch() {
     setSearchValue(event.target.value);
   };
 
-  const [text] = useTypewriter({
+/*   const [text] = useTypewriter({
     words: categories,
     loop: {},
     typeSpeed: 120,
@@ -58,12 +58,12 @@ export function InputSearch() {
       );
     },
   });
-
+ */
   return (
     <form className="relative">
       <input
         type="text"
-        placeholder={`Buscar "${text}"`}
+       /*  placeholder={`Buscar "${text}"`} */
         value={searchValue}
         className="border border-gray-500 focus:outline-[#61005D] px-4 py-1  w-44 md:w-80  rounded-md"
         onKeyDown={handleKeyDown}

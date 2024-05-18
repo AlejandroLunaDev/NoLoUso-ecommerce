@@ -13,12 +13,12 @@ export function NavCategorias({ handleCategoryClick }) {
   const asyncFunction = () =>  getAllProducts(categoryId)
   const { data: products, loading, error } = useAsync(asyncFunction, [categoryId])
 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (products && products.length > 0) {
       const categoriesSet = new Set(products.map(product => product.category));
       setUniqueCategories(Array.from(categoriesSet));
     }
-  }, [products]);
+  }, [products]); */
 
   if(loading) {
     return <h1>Se están cargando los productos...</h1>
