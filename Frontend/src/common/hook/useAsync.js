@@ -7,10 +7,8 @@ export const useAsync = (asyncFunction, dependencies = []) => {
 
     useEffect(() => {
         setLoading(true)
-        console.log('Iniciando solicitud asíncrona...'); // Agregar esta línea para depuración
         asyncFunction()
             .then(data => {
-                console.log('Solicitud asíncrona completada con éxito:', data); // Agregar esta línea para depuración
                 setData(data)
             })
             .catch(error => {
@@ -19,7 +17,6 @@ export const useAsync = (asyncFunction, dependencies = []) => {
             })
             .finally(() => {
                 setLoading(false)
-                console.log('Solicitud asíncrona finalizada'); // Agregar esta línea para depuración
             })
     }, dependencies)
 

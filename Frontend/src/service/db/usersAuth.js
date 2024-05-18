@@ -1,5 +1,11 @@
-const BASE_URL_PROFILE = `${import.meta.env.VITE_BACK_PORT}/api/users`;
-const BASE_URL_AUTH = `${import.meta.env.VITE_BACK_PORT}/api/auth`;
+const isProduction = import.meta.env.MODE === 'production';
+const BASE_URL =isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
+const SOCKET_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
+console.log('Base URL:', BASE_URL);
+console.log('Socket URL:', SOCKET_URL);
+
+const BASE_URL_PROFILE = `${BASE_URL}/api/users`;
+const BASE_URL_AUTH = `${BASE_URL}/api/auth`;
 
 const userAuth = {
   async createUser(userData) {

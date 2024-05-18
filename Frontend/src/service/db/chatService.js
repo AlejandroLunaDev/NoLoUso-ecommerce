@@ -1,4 +1,7 @@
-const BASE_URL_CHAT = `${import.meta.env.VITE_BACK_PORT}/api/messages`;
+const isProduction = import.meta.env.MODE === 'production';
+const BASE_URL = isProduction ? import.meta.env.VITE_BACKEND_URL_PROD : import.meta.env.VITE_BACKEND_URL_DEV;
+const BASE_URL_CHAT = `${BASE_URL}/api/messages`;
+
 
 const chatService = {
   async createMessage(messageData) {

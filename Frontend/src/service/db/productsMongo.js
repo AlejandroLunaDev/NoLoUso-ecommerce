@@ -1,15 +1,15 @@
-const BASE_URL = import.meta.env.VITE_BACK_PORT || 'https://nolouso-ecommerce-production.up.railway.app' ;
-console.log('el puerto obtenido es:', BASE_URL)
+const isProduction = import.meta.env.MODE === 'production';
+const BASE_URL = isProduction ? import.meta.env.VITE_BACKEND_URL_PROD : import.meta.env.VITE_BACKEND_URL_DEV;
+const SOCKET_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
+
 export const getAllProducts = async (sortOrder = 'desc') => {
   try {
-    const url = `${BASE_URL}/api/products?sort=${sortOrder}`;
-    console.log('Realizando solicitud a:', url); // Agregar esta línea para depuración
+    const url = `${BASE_URL}/api/products?sort=${sortOrder}`; // Agregar esta línea para depuración
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Error al obtener los productos');
     }
     const data = await response.json();
-    console.log('Datos obtenidos:', data); // Agregar esta línea para depuración
     return data; 
   } catch (error) {
     console.error('Error al obtener los productos:', error);
