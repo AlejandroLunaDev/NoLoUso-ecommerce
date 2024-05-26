@@ -2,21 +2,24 @@ const isProduction = import.meta.env.MODE === 'production';
 const BASE_URL = isProduction ? import.meta.env.VITE_BACKEND_URL_PROD : import.meta.env.VITE_BACKEND_URL_DEV;
 const SOCKET_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
 
-export const getAllProducts = async (sortOrder = 'desc') => {
+export const getAllProducts = async (sortOrder = 'desc', page = 1, limit = 10, category = '', availability = '') => {
   try {
-    const url = `${BASE_URL}/api/products?sort=${sortOrder}`; // Agregar esta línea para depuración
-    const response = await fetch(url);
+    const url = new URL(`${BASE_URL}/api/products`);
+    const params = { sort: sortOrder, page, limit };
+    if (category) params.category = category;
+    if (availability) params.availability = availability;
+    const queryString = new URLSearchParams(params).toString();
+    const response = await fetch(`${url}?${queryString}`);
     if (!response.ok) {
       throw new Error('Error al obtener los productos');
     }
     const data = await response.json();
-    return data; 
+    return data;
   } catch (error) {
     console.error('Error al obtener los productos:', error);
     throw error;
   }
 };
-
 
 
 export const getProductById = async (productId) => {

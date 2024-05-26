@@ -48,7 +48,7 @@ export const FormAdmin = ({ onAddProduct }) => {
   return (
     <div className="mt-8">
       <h2 className="text-xl font-semibold mb-4">Add Product</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-1/2">
         <div className="mb-4">
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">
             Title
@@ -59,7 +59,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             id="title"
             value={newProduct.title}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className=" h-10 mt-1 block w-full border border-gray-500 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <div className="mb-4">
@@ -75,6 +75,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
+        <div className="flex gap-4">
         <div className="mb-4">
           <label htmlFor="code" className="block text-sm font-medium text-gray-700">
             Code
@@ -85,7 +86,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             id="code"
             value={newProduct.code}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="h-10 mt-1 block w-24 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <div className="mb-4">
@@ -98,7 +99,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             id="price"
             value={newProduct.price}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className=" h-10 mt-1 block w-24 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <div className="mb-4">
@@ -111,8 +112,9 @@ export const FormAdmin = ({ onAddProduct }) => {
             id="stock"
             value={newProduct.stock}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="h-10 mt-1 block w-24 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+        </div>
         </div>
         <div className="mb-4">
           <label htmlFor="category" className="block text-sm font-medium text-gray-700">
@@ -124,7 +126,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             id="category"
             value={newProduct.category}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className=" h-10 mt-1 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <div className="mb-4">
@@ -137,7 +139,7 @@ export const FormAdmin = ({ onAddProduct }) => {
             id="thumbnails"
             value={newProduct.thumbnails}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className=" h-10 mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
         <button type="submit" className="bg-[#61005D] text-white px-4 py-2 rounded-md mt-4">

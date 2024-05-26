@@ -12,7 +12,7 @@ export function InputSearch() {
   const [categories, setCategories] = useState([]);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const allProducts = await getAllProducts();
@@ -29,7 +29,7 @@ export function InputSearch() {
     };
 
     fetchProducts();
-  }, []);
+  }, []); */
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {

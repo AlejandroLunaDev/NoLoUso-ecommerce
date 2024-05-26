@@ -34,11 +34,16 @@ class ProductDaoMongo {
       throw new Error('Error al eliminar el producto');
     }
   }
-
-  static async get(sortBy = 'desc') {
+  static async get({ page = 1, limit = 10, sort = 'desc', query = {} }) {
     try {
-      let sortOrder = sortBy === 'asc' ? 1 : -1;
-      return await productModel.find().sort({ created_at: sortOrder }).exec();
+      const sortOrder = sort === 'asc' ? 1 : -1;
+      const options = {
+        page,
+        limit,
+        sort: { price: sortOrder },
+      };
+
+      return await productModel.paginate(query, options);
     } catch (error) {
       throw new Error('Error al obtener los productos');
     }

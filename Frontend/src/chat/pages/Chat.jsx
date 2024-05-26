@@ -78,7 +78,7 @@ export const Chat = () => {
   };
 
   return (
-    <div className="flex h-dvh">
+    <div className="flex h-screen">
       <div className="w-1/5 p-4">
         <h1 className="text-lg font-bold mb-4">Usuarios</h1>
         <ul>
@@ -95,13 +95,16 @@ export const Chat = () => {
           ))}
         </ul>
       </div>
-      <article className="w-3/4  p-4">
+      <article className="w-3/4 p-4">
         <header>
-          <h1 className=" text-lg font-bold mb-4">Chat</h1>
+          <h1 className="text-lg font-bold mb-4">Chat</h1>
         </header>
-        <div className="chat-messages mb-2 h-4/6 overflow-auto border border-[#61005D] rounded-md p-4">
+        <div className="chat-messages mb-2 h-4/6 overflow-auto">
           {messages.map((msg) => (
-            <p key={msg._id} className="mb-2">
+            <p
+              key={msg._id}
+              className={`mb-2 p-2 rounded-lg max-w-2/3 ${msg.sender === user._id ? 'bg-[#61005D]/40 self-end inline-block' : 'bg-white self-start'}`}
+            >
               <strong>{getSenderName(msg.sender)}: </strong>
               {msg.message}
             </p>
