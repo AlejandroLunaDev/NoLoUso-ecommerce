@@ -13,15 +13,18 @@ export const ItemTable = ({ products, setProducts }) => {
   const [sortOrder, setSortOrder] = useState("desc");
   const [openModal, setOpenModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchProducts();
-  }, [sortOrder]);
+  }, [sortOrder, currentPage]);
 
   const fetchProducts = async () => {
     try {
-      const allProducts = await getAllProducts(sortOrder);
-      setProducts(allProducts.payload); // Suponiendo que la respuesta tiene una propiedad payload con los productos
+      const allProducts = await getAllProducts(sortOrder, currentPage, 10); // Asegúrate de que getAllProducts acepte estos parámetros
+      setProducts(allProducts.payload);
+      setTotalPages(allProducts.totalPages); // Asegúrate de que la respuesta incluya totalPages
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -79,6 +82,30 @@ export const ItemTable = ({ products, setProducts }) => {
   const handleChangeSortOrder = (e) => {
     const newSortOrder = e.target.value;
     setSortOrder(newSortOrder);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 3;
+    const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`mx-1 w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md ${currentPage === i ? 'bg-[#61005D] text-white' : 'bg-white text-black'}`}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
   };
 
   return (
@@ -154,6 +181,21 @@ export const ItemTable = ({ products, setProducts }) => {
           ))}
         </tbody>
       </table>
+      <div className='flex justify-center mt-5'>
+        <button
+          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+          className='mx-1 w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md bg-white text-black'
+        >
+          &laquo;
+        </button>
+        {renderPageNumbers()}
+        <button
+          onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+          className='mx-1 w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md bg-white text-black'
+        >
+          &raquo;
+        </button>
+      </div>
       <Modal
         open={openModal}
         onClose={handleCloseModal}
