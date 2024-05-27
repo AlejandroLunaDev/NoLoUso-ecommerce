@@ -11,6 +11,7 @@ import "toastify-js/src/toastify.css";
 
 export const ItemTable = ({ products, setProducts }) => {
   const [sortOrder, setSortOrder] = useState("desc");
+  const [sortBy, setSortBy] = useState("date");
   const [openModal, setOpenModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,11 +19,11 @@ export const ItemTable = ({ products, setProducts }) => {
 
   useEffect(() => {
     fetchProducts();
-  }, [sortOrder, currentPage]);
+  }, [sortOrder, sortBy, currentPage]);
 
   const fetchProducts = async () => {
     try {
-      const allProducts = await getAllProducts(sortOrder, currentPage, 10); // Asegúrate de que getAllProducts acepte estos parámetros
+      const allProducts = await getAllProducts(sortOrder, currentPage, 10, "", sortBy); // Asegúrate de que getAllProducts acepte estos parámetros
       setProducts(allProducts.payload);
       setTotalPages(allProducts.totalPages); // Asegúrate de que la respuesta incluya totalPages
     } catch (error) {
@@ -84,6 +85,11 @@ export const ItemTable = ({ products, setProducts }) => {
     setSortOrder(newSortOrder);
   };
 
+  const handleChangeSortBy = (e) => {
+    const newSortBy = e.target.value;
+    setSortBy(newSortBy);
+  };
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -119,8 +125,8 @@ export const ItemTable = ({ products, setProducts }) => {
         onChange={handleChangeSortOrder}
         className="mb-4 border p-1 rounded-xl"
       >
-        <option value="desc">Cargado recientemente</option>
-        <option value="asc">Cargado más antiguo</option>
+        <option value="desc">Más caro a más barato</option>
+        <option value="asc">Más barato a más caro</option>
       </select>
       <table className="w-full border-collapse border border-gray-300">
         <thead>

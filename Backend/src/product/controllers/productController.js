@@ -1,5 +1,4 @@
 import ProductDaoMongo from '../dao/productDao.js';
- 
 
 class ProductController {
   async createProduct(req, res) {
@@ -14,22 +13,24 @@ class ProductController {
 
   async getAllProducts(req, res) {
     try {
-      const { limit, page, sort, query,category,availability } = req.query;
+      const { limit, page, sort, category, availability } = req.query;
       const filters = {};
 
-      if (query) {
-        const queryObject = JSON.parse(query);
+      // Añadir filtros de categoría y disponibilidad directamente
+      if (category) {
+        filters.category = category;
+      }
+      if (availability === 'true') {
+        filters.stock = { $gt: 0 };
+      }
+
+      // Si se proporciona un parámetro `query`, parsear y añadir a los filtros
+      if (req.query.query) {
+        const queryObject = JSON.parse(req.query.query);
         if (queryObject.category) {
           filters.category = queryObject.category;
         }
         if (queryObject.availability) {
-          filters.stock = { $gt: 0 };
-        }
-
-        if(category){
-          filters.category = category;
-        }
-        if(availability){
           filters.stock = { $gt: 0 };
         }
       }
@@ -58,7 +59,8 @@ class ProductController {
     } catch (error) {
       res.status(500).json({ error: 'Error al obtener los productos' });
     }
-  }  
+  }
+
   async getProductById(req, res) {
     try {
       const productId = req.params.id;
@@ -73,7 +75,7 @@ class ProductController {
       res.status(500).json({ error: 'Error al obtener el producto' });
     }
   }
-  
+
   async updateProduct(req, res) {
     try {
       const productId = req.params.id;
@@ -89,7 +91,6 @@ class ProductController {
     try {
       const productId = req.params.id;
       const deletedProduct = await ProductDaoMongo.delete(productId);
-      console.log(productId)
       if (!deletedProduct) {
         return res.status(404).json({ error: 'Producto no encontrado' });
       }
@@ -98,6 +99,6 @@ class ProductController {
       res.status(500).json({ error: 'Error al eliminar el producto' });
     }
   }
-    }
+}
 
 export default new ProductController();

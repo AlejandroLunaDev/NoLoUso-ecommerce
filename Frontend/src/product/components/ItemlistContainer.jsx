@@ -22,11 +22,12 @@ export function ItemlistContainer({ greeting }) {
   const currentPageParam = new URLSearchParams(location.search).get('page');
   const [currentPage, setCurrentPage] = useState(parseInt(currentPageParam) || 1);
   const [totalPages, setTotalPages] = useState(1);
+  const [sortOrder, setSortOrder] = useState('desc');
 
   const asyncFunction = async () => {
     console.log('Fetching products with category:', categoryToFetch);
     try {
-      const response = await getAllProducts('desc', currentPage, 10, categoryToFetch);
+      const response = await getAllProducts(sortOrder, currentPage, 12, categoryToFetch);
       console.log('API response:', response);
       setTotalPages(response.totalPages); // Asigna el número total de páginas
       return response;
@@ -36,10 +37,14 @@ export function ItemlistContainer({ greeting }) {
     }
   };
 
-  const { data: products, loading, error } = useAsync(asyncFunction, [currentPage, categoryToFetch]);
+  const { data: products, loading, error } = useAsync(asyncFunction, [currentPage, categoryToFetch, sortOrder]);
 
   const handlePageChange = newPage => {
     setCurrentPage(newPage);
+  };
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
   };
 
   useEffect(() => {
@@ -82,6 +87,13 @@ export function ItemlistContainer({ greeting }) {
   return (
     <div className='item-list-container'>
       <h2 className='my-4 font-bold'>Nuestros Productos</h2>
+      <div className='flex justify-end mb-4'>
+        <label className='mr-2'>Ordenar por:</label>
+        <select value={sortOrder} onChange={handleSortOrderChange} className='border border-gray-300 rounded-md'>
+          <option value='desc'>Más caro a más barato</option>
+          <option value='asc'>Más barato a más caro</option>
+        </select>
+      </div>
       <ItemListMemoized products={products.payload} />
       <div className='flex justify-center mt-5'>
         <button
