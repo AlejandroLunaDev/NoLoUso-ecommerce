@@ -1,7 +1,6 @@
 const isProduction = import.meta.env.MODE === 'production';
-const BASE_URL =isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
+const BASE_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
 const SOCKET_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
-
 
 const BASE_URL_PROFILE = `${BASE_URL}/api/users`;
 const BASE_URL_AUTH = `${BASE_URL}/api/auth`;
@@ -35,24 +34,23 @@ const userAuth = {
         credentials: "include",
       });
       const userData = await response.json();
-      
-      
-
-      // Guardar usuario en el estado
+      // Guarda el refreshToken en el localStorage si está disponible
+      if (userData.refreshToken) {
+        localStorage.setItem('refreshToken', userData.refreshToken);
+      }
       return userData;
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
       throw new Error("Error al iniciar sesión");
     }
   },
+
   async logoutUser() {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
       if (!refreshToken) {
         throw new Error("No refresh token available");
       }
-
-     
 
       const response = await fetch(`${BASE_URL_AUTH}/logout`, {
         method: "POST",
@@ -67,12 +65,14 @@ const userAuth = {
         console.error("Logout failed:", errorText);
         throw new Error("Error al cerrar sesión");
       }
+      localStorage.removeItem('refreshToken'); // Remover el refreshToken al cerrar sesión
       return await response.json();
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       throw new Error("Error al cerrar sesión");
     }
   },
+
   async deleteUser(userId) {
     try {
       const response = await fetch(`${BASE_URL_PROFILE}/${userId}`, {
@@ -100,7 +100,6 @@ const userAuth = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${refreshToken}`
-
         },
         body: JSON.stringify(userData),
       });
@@ -127,6 +126,7 @@ const userAuth = {
       throw new Error("Error al obtener usuario");
     }
   },
+
   async getAllUsers() {
     try {
       const token = localStorage.getItem('refreshToken');
@@ -151,7 +151,6 @@ const userAuth = {
   async refreshAccessToken(refreshToken) {
     try {
       const response = await fetch(`${BASE_URL_AUTH}/refresh-token`, {
-        // Asegúrate de que esta ruta coincida
         method: "POST",
         headers: {
           "Content-Type": "application/json",

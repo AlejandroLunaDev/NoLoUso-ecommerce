@@ -4,12 +4,15 @@ import cors from "cors";
 import { connectDB } from "./db/mongoDb.js";
 import socketConfig from "./configs/socketConfig.js";
 import config from './configs/config.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Import routes
 import productRouter from "./product/routes/productsRouter.js";
 import userRouter from "./profile/routes/userRouter.js";
 import authRouter from "./auth/routes/AuthUserRouter.js";
 import messageRouter from "./chat/routes/messageRoutes.js";
+import cartRoutes from "./cart/routes/cartRouter.js";
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -50,6 +53,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/products", productRouter);
+app.use('/api/carts', cartRoutes);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRouter);

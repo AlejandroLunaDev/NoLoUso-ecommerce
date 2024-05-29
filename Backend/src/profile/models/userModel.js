@@ -48,7 +48,7 @@ const userSchema = new Schema({
     {
       withUser: {
         type: Schema.Types.ObjectId,
-        ref: "Users",
+        ref: "users",
       },
       lastMessageAt: { type: Date, default: Date.now },
     },

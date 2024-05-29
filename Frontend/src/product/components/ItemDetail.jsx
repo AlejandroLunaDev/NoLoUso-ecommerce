@@ -120,11 +120,11 @@ export function ItemDetail({
               <p>{itemId}</p>
             </div>
           </header>
-          <p className="font-bold mb-5">$ {price}</p>
+          <p className="font-bold mb-5 ">$ {price}</p>
           <h3 className="font-bold">Categoria</h3>
           <p>{category}</p>
           <h3 className="font-bold">Descripción</h3>
-          <p className="text-[11px] md:text-sm">{description}</p>
+          <p className="text-[11px] md:text-sm w-1/3">{description}</p>
         </article>
         <div className="w-60 mt-8">
           {hasStock ? (

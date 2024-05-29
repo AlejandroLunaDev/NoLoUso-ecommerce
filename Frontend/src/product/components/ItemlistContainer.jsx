@@ -16,8 +16,7 @@ export function ItemlistContainer({ greeting }) {
     ? location.pathname.split('/search/')[1]
     : selectedCategory;
 
-  console.log('Category to fetch:', categoryToFetch); 
-  console.log('Selected category from context:', selectedCategory);
+
 
   const currentPageParam = new URLSearchParams(location.search).get('page');
   const [currentPage, setCurrentPage] = useState(parseInt(currentPageParam) || 1);
@@ -25,10 +24,8 @@ export function ItemlistContainer({ greeting }) {
   const [sortOrder, setSortOrder] = useState('desc');
 
   const asyncFunction = async () => {
-    console.log('Fetching products with category:', categoryToFetch);
     try {
       const response = await getAllProducts(sortOrder, currentPage, 12, categoryToFetch);
-      console.log('API response:', response);
       setTotalPages(response.totalPages); // Asigna el número total de páginas
       return response;
     } catch (error) {

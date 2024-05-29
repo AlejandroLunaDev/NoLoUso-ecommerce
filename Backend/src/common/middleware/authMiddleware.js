@@ -22,6 +22,7 @@ function authenticateToken(req, res, next) {
             return res.sendStatus(403);
         }
         req.user = user;
+        console.log("el id es", user.user._id);
         next();
     });
 }

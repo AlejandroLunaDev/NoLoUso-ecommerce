@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 function sing(payload,isAccesToken) {
-    return jwt.sign(payload,isAccesToken ? process.env.ACCES_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET, {
+    return jwt.sign(payload,isAccesToken ? process.env.ACCESS_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET, {
         algorithm: "HS256",
         expiresIn: isAccesToken ? "3000" : "10d",
     });

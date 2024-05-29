@@ -1,91 +1,93 @@
 import React, { useState, createContext, useEffect } from "react";
+import cartsService from "../../service/db/cartService";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
-
-  const addItem = (productToAdd) => {
-    const { itemId, title, price, quantity, stock } = productToAdd;
-    const img = productToAdd.thumbnails || "";
-    if (!isInCart(itemId)) { // Aquí corregimos el uso de itemId
-      setCart((prev) => [...prev, { itemId, title, price, quantity, img, stock }]);
-    } else {
-      console.error("El producto ya está agregado");
-    }
-  };
-  
-
-  const addQuantity = (productId, quantityToAdd) => {
-    const productToUpdateIndex = cart.findIndex(
-      (item) => item.id === productId
-    );
-    if (productToUpdateIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart[productToUpdateIndex].quantity += quantityToAdd;
-      setCart(updatedCart);
-      setTotalQuantity(
-        (prevTotalQuantity) => prevTotalQuantity + quantityToAdd
-      );
-    } else {
-      console.error("El producto no está en el carrito");
-    }
-  };
-
-  const removeQuantity = (id) => {
-    const updatedCart = cart.map((item) => {
-      if (item.id === id && item.quantity > 0) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
-    setCart(updatedCart);
-  };
-
-  const isInCart = (itemId) => {
-    const isInCart = cart.some((prod) => prod.itemId === itemId);
-    return isInCart;
-  };
-
-  const clearCart = () => {
-    setCart([]);
-  };
-
-  const removeItem = (itemId) => {
-    const updatedCart = cart.filter((prod) => prod.itemId !== itemId);
-    setCart(updatedCart);
-  };
-  
+  const [subtotal, setSubtotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const updatedQuantity = cart.reduce((acc, curr) => acc + curr.quantity, 0);
-    setTotalQuantity(updatedQuantity);
-  }, [cart]);
+    const fetchCart = async () => {
+      try {
+        const cartData = await cartsService.getCart();
+        console.log('Fetched Cart Data:', cartData);
+        setCart(cartData.products || []);
+        updateTotals(cartData.products || []);
+      } catch (error) {
+        console.error('Error al obtener el carrito:', error);
+      }
+    };
 
-  const getTotal = () => {
-    let acumulador = 0;
-    cart.forEach((prod) => {
-      acumulador += prod.quantity * prod.price;
-    });
-    return acumulador;
+    fetchCart();
+  }, []);
+
+  const updateTotals = (cartItems) => {
+    const descuento = 0; // Esto podría ser una variable dinámica si el descuento cambia
+    const updatedTotalQuantity = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
+    setTotalQuantity(updatedTotalQuantity);
+  
+    const updatedSubtotal = cartItems.reduce((acc, curr) => acc + (curr.quantity * curr.product.price), 0);
+    setSubtotal(updatedSubtotal);
+  
+    // Considerando que `descuento` es una variable externa o estática
+    const totalf = updatedSubtotal - descuento; 
+    setTotal(totalf);
   };
 
-  const total = getTotal();
+  const addItem = async (productToAdd) => {
+    try {
+      const { itemId: productId, quantity } = productToAdd; // Corrección aquí
+
+      console.log('Adding product to cart:', { productId, quantity }); // Log de depuración
+
+      let cartData = await cartsService.getCart();
+
+      if (!cartData || !cartData.products || cartData.products.length === 0) {
+        await cartsService.createCart();
+        cartData = await cartsService.getCart();
+      }
+
+      await cartsService.addProductToCart(productId, quantity);
+
+      // Fetch the updated cart after adding the product
+      cartData = await cartsService.getCart();
+
+      setCart(cartData.products || []);
+      updateTotals(cartData.products || []);
+    } catch (error) {
+      console.error('Error al agregar el producto al carrito:', error);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      await cartsService.clearCart();
+      setCart([]);
+      setTotalQuantity(0);
+      setSubtotal(0);
+      setTotal(0);
+    } catch (error) {
+      console.error('Error al vaciar el carrito:', error);
+    }
+  };
+  
+  const isInCart = (productId) => {
+    return cart.some((item) => item.product === productId);
+  };
 
   return (
     <CartContext.Provider
       value={{
         cart,
         addItem,
-        addQuantity,
-        removeQuantity,
         totalQuantity,
-        setTotalQuantity,
+        subtotal,
         total,
         clearCart,
-        isInCart,
-        removeItem,
+        isInCart
       }}
     >
       {children}
