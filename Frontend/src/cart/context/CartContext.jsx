@@ -40,27 +40,43 @@ export const CartProvider = ({ children }) => {
   const addItem = async (productToAdd) => {
     try {
       const { itemId: productId, quantity } = productToAdd; // Corrección aquí
-
+  
       console.log('Adding product to cart:', { productId, quantity }); // Log de depuración
-
-      let cartData = await cartsService.getCart();
-
-      if (!cartData || !cartData.products || cartData.products.length === 0) {
+  
+      // Obtener los datos del carrito
+      let cartData = await cartsService.createCart();
+      console.log('Cart data:', cartData); // Log de depuración
+  
+      // Si el carrito no existe o está vacío, crearlo
+      if (!cartData || !cartData.products) {
+        console.log('Cart not found, creating a new cart.'); // Log de depuración
         await cartsService.createCart();
+        // Volver a obtener los datos del carrito después de crear uno nuevo
         cartData = await cartsService.getCart();
+        console.log('New cart data:', cartData); // Log de depuración
       }
-
-      await cartsService.addProductToCart(productId, quantity);
-
-      // Fetch the updated cart after adding the product
-      cartData = await cartsService.getCart();
-
-      setCart(cartData.products || []);
-      updateTotals(cartData.products || []);
+  
+      // Asegurarse de que el carrito existe antes de agregar el producto
+      if (cartData && cartData.products) {
+        // Agregar el producto al carrito
+        await cartsService.addProductToCart(productId, quantity);
+  
+        // Obtener el carrito actualizado después de agregar el producto
+        cartData = await cartsService.getCart();
+        console.log('Updated cart data:', cartData); // Log de depuración
+  
+        // Actualizar el estado del carrito y los totales
+        setCart(cartData.products || []);
+        updateTotals(cartData.products || []);
+      } else {
+        console.error('Cart was not created properly.');
+      }
     } catch (error) {
       console.error('Error al agregar el producto al carrito:', error);
     }
   };
+  
+  
 
   const clearCart = async () => {
     try {

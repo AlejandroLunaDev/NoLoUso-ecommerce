@@ -2,13 +2,21 @@ import CartDaoMongo from '../dao/cartDao.js';
 
 class CartController {
   async createCart(req, res) {
+    console.log("id de usuario al crear el carrito:", req.user.user._id);
     try {
       if (!req.user || !req.user.user._id) {
         throw new Error('User ID not found in request');
       }
 
       const userId = req.user.user._id;
-      const cart = await CartDaoMongo.create(userId);
+      let cart = await CartDaoMongo.getByUserId(userId);
+      if (cart) {
+        console.log("Carrito ya existe para el usuario:", userId);
+        return res.status(200).json(cart);
+      }
+
+      console.log("Carrito no encontrado. Creando uno nuevo.");
+      cart = await CartDaoMongo.create(userId);
       res.status(201).json(cart);
     } catch (error) {
       console.error('Error creating cart:', error);
@@ -40,46 +48,42 @@ class CartController {
 
   async addProductToCart(req, res) {
     try {
-        // Aquí se define un ID de usuario predeterminado para pruebas
+        console.log("Inicio de addProductToCart");
+       if (!req.user || !req.user.user._id) {
+            console.log("User ID not found in request");
+            throw new Error('User ID not found in request');
+        } 
+        
         const userId = req.user.user._id;
-
         const { productId, quantity } = req.body;
 
-        // Verificación de tipos de datos
+        console.log("Datos del producto recibidos:", { productId, quantity });
+
         if (!productId || !quantity || typeof productId !== 'string' || typeof quantity !== 'number') {
+            console.log("Datos inválidos recibidos en addProductToCart:", { productId, quantity });
             return res.status(400).json({ error: 'Datos inválidos' });
         }
 
-        console.log('User ID:', userId);
-        console.log('Product ID:', productId);
-        console.log('Quantity:', quantity);
-
-        // Buscar el carrito del usuario
-        console.log('Buscando carrito para el usuario:', userId);
+        console.log("Verificando existencia del carrito para el usuario:", userId);
         let cart = await CartDaoMongo.getByUserId(userId);
+        console.log("Carrito encontrado:", cart);
 
-        console.log('Carrito encontrado:', cart);
-
-        // Si no hay carrito, crear uno nuevo
         if (!cart) {
-            console.log('Carrito no encontrado. Creando uno nuevo.');
+            console.log("Carrito no encontrado. Creando uno nuevo.");
             cart = await CartDaoMongo.create(userId);
-            console.log('Carrito creado:', cart);
+            console.log("Carrito creado:", cart);
         }
 
-        // Ahora, agregar el producto al carrito
-        console.log('Agregando producto al carrito:', productId, 'Cantidad:', quantity);
+        console.log("Agregando producto al carrito:", { productId, quantity });
         cart = await CartDaoMongo.addProductToCart(userId, productId, quantity);
-
-        console.log('Carrito actualizado:', cart);
-
-        // Responder con el carrito actualizado
+        console.log("Carrito actualizado:", cart);
         res.status(200).json(cart);
     } catch (error) {
         console.error('Error adding product to cart:', error);
         res.status(500).json({ error: `Error al agregar el producto al carrito: ${error.message}` });
     }
 }
+
 
 
   

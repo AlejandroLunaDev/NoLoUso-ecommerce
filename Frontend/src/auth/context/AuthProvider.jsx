@@ -51,11 +51,11 @@ export const AuthProvider = ({ children }) => {
                 setAccessToken(userData.accessToken);
                 setRefreshToken(userData.refreshToken);
                 localStorage.setItem('refreshToken', userData.refreshToken);
-         /*        localStorage.setItem('accessToken', userData.accessToken); */
+                /*        localStorage.setItem('accessToken', userData.accessToken); */
                 localStorage.setItem('user', JSON.stringify(userData.user));
-                await userAuth.updateUser(userData.user._id,{online:true})
-
+                
                 await fetchUsersList(userData.accessToken);
+                await userAuth.updateUser(userData.user._id,{online:true})
             } else {
                 throw new Error("Datos de autenticación inválidos");
             }

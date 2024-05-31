@@ -14,7 +14,7 @@ function authenticateToken(req, res, next) {
     const isRefreshToken = req.path === '/api/auth/refresh-token' || req.path === '/api/auth/logout';
     const secret = !isRefreshToken ? process.env.REFRESH_TOKEN_SECRET : process.env.ACCESS_TOKEN_SECRET;
     
-    console.log(process.env.ACCESS_TOKEN_SECRET);
+   
    
     jwt.verify(token, secret, (err, user) => {
         if (err) {
@@ -22,7 +22,6 @@ function authenticateToken(req, res, next) {
             return res.sendStatus(403);
         }
         req.user = user;
-        console.log("el id es", user.user._id);
         next();
     });
 }
