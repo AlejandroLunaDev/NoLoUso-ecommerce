@@ -44,9 +44,10 @@ export const CartProvider = ({ children }) => {
       console.log('Adding product to cart:', { productId, quantity }); // Log de depuración
   
       // Obtener los datos del carrito
-      let cartData = await cartsService.createCart();
-      console.log('Cart data:', cartData); // Log de depuración
-  
+      
+   /*    let cartData = await cartsService.createCart();
+      console.log('Cart data:', cartData);  */// Log de depuración
+      let cartData = await cartsService.getCart();
       // Si el carrito no existe o está vacío, crearlo
       if (!cartData || !cartData.products) {
         console.log('Cart not found, creating a new cart.'); // Log de depuración

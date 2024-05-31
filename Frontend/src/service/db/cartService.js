@@ -45,7 +45,7 @@ const cartsService = {
       console.log('API Response:', response); // Log de la respuesta completa
       if (!response.ok) {
         console.error('Error al obtener el carrito:', response.statusText);
-        throw new Error('Error al obtener el carrito');
+        return undefined;
       }
       const data = await response.json();
       console.log('Cart Data:', data); // Log de los datos del carrito
