@@ -2,7 +2,6 @@ import CartDaoMongo from '../dao/cartDao.js';
 
 class CartController {
   async createCart(req, res) {
-    console.log("id de usuario al crear el carrito:", req.user.user._id);
     try {
       if (!req.user || !req.user.user._id) {
         throw new Error('User ID not found in request');
@@ -30,14 +29,11 @@ class CartController {
         throw new Error('User ID not found in request');
       }
       const userId = req.user.user._id;
-      console.log("User ID:", userId);
       const cart = await CartDaoMongo.getByUserId(userId);
-      console.log("Cart:", cart);
       if (!cart) {
         console.log("Cart not found");
         return res.status(404).json({ error: 'Carrito no encontrado' });
       }
-      console.log("Returning cart:", cart);
       res.status(200).json(cart);
     } catch (error) {
       console.error('Error getting cart:', error);
@@ -48,23 +44,17 @@ class CartController {
 
   async addProductToCart(req, res) {
     try {
-        console.log("Inicio de addProductToCart");
        if (!req.user || !req.user.user._id) {
-            console.log("User ID not found in request");
             throw new Error('User ID not found in request');
         } 
         
         const userId = req.user.user._id;
         const { productId, quantity } = req.body;
-
-        console.log("Datos del producto recibidos:", { productId, quantity });
-
         if (!productId || !quantity || typeof productId !== 'string' || typeof quantity !== 'number') {
             console.log("Datos inválidos recibidos en addProductToCart:", { productId, quantity });
             return res.status(400).json({ error: 'Datos inválidos' });
         }
 
-        console.log("Verificando existencia del carrito para el usuario:", userId);
         let cart = await CartDaoMongo.getByUserId(userId);
         console.log("Carrito encontrado:", cart);
 
