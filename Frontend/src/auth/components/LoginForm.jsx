@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthProvider';
-import RegisterForm from './RegisterForm'; 
+import RegisterForm from './RegisterForm';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useNavigate } from 'react-router'; 
+import { useNavigate } from 'react-router';
 
 const LoginForm = () => {
-  const { login } = useContext(AuthContext); 
+  const { login, loginWithGitHub } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showRegister, setShowRegister] = useState(false); 
+  const [showRegister, setShowRegister] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -20,14 +20,22 @@ const LoginForm = () => {
       const data = await login(credentials);
       sessionStorage.setItem('refreshToken', data.refreshToken);
       navigate('/');
-   
     } catch (error) {
-      setError('Usuario o contraseña incorrectos'); 
+      setError('Usuario o contraseña incorrectos');
     }
   };
 
   const handleRegister = () => {
     setShowRegister(true);
+  };
+
+  const handleLoginWithGitHub = async () => {
+    try {
+      await loginWithGitHub();
+      navigate('/');
+    } catch (error) {
+      setError('Error al iniciar sesión con GitHub');
+    }
   };
 
   return (
@@ -56,6 +64,7 @@ const LoginForm = () => {
             </div>
             <button type="submit" className="w-full bg-[#61005D] text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Iniciar Sesión</button>
             <p className="text-center mt-4">¿No tienes una cuenta? <span className="text-[#61005D] font-semibold cursor-pointer" onClick={handleRegister}>Regístrate aquí</span></p>
+            <button type="button" className="w-full bg-[#333333] text-white py-2 px-4 rounded-md mt-4 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50" onClick={handleLoginWithGitHub}>Iniciar sesión con GitHub</button>
           </form>
         </>
       )}

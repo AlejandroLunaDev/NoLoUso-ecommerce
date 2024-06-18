@@ -1,6 +1,8 @@
+// server.js
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
+import passport from 'passport';
 import { connectDB } from "./db/mongoDb.js";
 import socketConfig from "./configs/socketConfig.js";
 import config from './configs/config.js';
@@ -13,6 +15,7 @@ import userRouter from "./profile/routes/userRouter.js";
 import authRouter from "./auth/routes/AuthUserRouter.js";
 import messageRouter from "./chat/routes/messageRoutes.js";
 import cartRoutes from "./cart/routes/cartRouter.js";
+import githubRoutes from './github/routes/githubRoutes.js';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -51,12 +54,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Passport middleware
+app.use(passport.initialize());
+
 // Routes
 app.use("/api/products", productRouter);
 app.use('/api/carts', cartRoutes);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRouter);
+app.use(githubRoutes); // Agrega las rutas de GitHub
 
 // Configure Socket.io
 socketConfig(httpServer);

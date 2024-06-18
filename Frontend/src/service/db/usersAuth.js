@@ -1,9 +1,11 @@
+
 const isProduction = import.meta.env.MODE === 'production';
 const BASE_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
 const SOCKET_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
 
 const BASE_URL_PROFILE = `${BASE_URL}/api/users`;
 const BASE_URL_AUTH = `${BASE_URL}/api/auth`;
+
 
 const userAuth = {
   async createUser(userData) {
@@ -167,6 +169,42 @@ const userAuth = {
       throw new Error("Error al refrescar el token");
     }
   },
+
+  async loginWithGitHub() {
+    console.log("Enviando petición GET a:", `${BASE_URL}/auth/github`);
+    window.location.href = `${BASE_URL}/auth/github`;
+  },
+
+  async handleGitHubCallback() {
+    try {
+      const response = await fetch(`${BASE_URL}github/callback`, {
+        method: "GET",
+        credentials: "include",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error al manejar la callback de GitHub");
+      }
+  
+      const { accessToken, refreshToken } = await response.json();
+  
+      // Guarda los tokens en localStorage
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+  
+      // Llama a la función login para utilizar los tokens y establecer la autenticación
+      await this.login({ accessToken, refreshToken });
+  
+      // Redirigir al usuario a la página principal o donde prefieras
+      window.location.href = 'http://localhost:5173/';
+    } catch (error) {
+      console.error("Error al manejar la callback de GitHub:", error);
+      throw new Error("Error al manejar la callback de GitHub");
+    }
+  },
+  
+
+
 };
 
 export default userAuth;

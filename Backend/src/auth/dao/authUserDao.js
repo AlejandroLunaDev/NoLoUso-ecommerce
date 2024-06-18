@@ -23,7 +23,14 @@ class AuthUserDao {
         }
     }
 
-
+    async getUserById(id) {
+        try {
+            const user = await userModel.findById(id);
+            return user;
+        } catch (error) {
+            throw new Error('Error al buscar el usuario por ID');
+        }
+    }
 }
 
 export default new AuthUserDao();

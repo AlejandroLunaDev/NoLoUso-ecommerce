@@ -3,8 +3,6 @@
 import React, { useContext, createContext, useState, useEffect, useCallback } from "react";
 import userAuth from "../../service/db/usersAuth";
 
-
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -38,9 +36,6 @@ export const AuthProvider = ({ children }) => {
         initializeAuth();
     }, [refreshToken]);
 
-  
-    
-
     const login = async (credentials) => {
         try {
             const userData = await userAuth.loginUser(credentials);
@@ -51,11 +46,10 @@ export const AuthProvider = ({ children }) => {
                 setAccessToken(userData.accessToken);
                 setRefreshToken(userData.refreshToken);
                 localStorage.setItem('refreshToken', userData.refreshToken);
-                /*        localStorage.setItem('accessToken', userData.accessToken); */
                 localStorage.setItem('user', JSON.stringify(userData.user));
                 
                 await fetchUsersList(userData.accessToken);
-                await userAuth.updateUser(userData.user._id,{online:true})
+                await userAuth.updateUser(userData.user._id, { online: true });
             } else {
                 throw new Error("Datos de autenticación inválidos");
             }
@@ -67,9 +61,37 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const loginWithGitHub = () => {
+        userAuth.loginWithGitHub();
+    };
+
+    const handleGitHubCallback = async () => {
+        try {
+            const userData = await userAuth.handleGitHubCallback();
+            if (userData && userData.accessToken && userData.refreshToken) {
+                setUser(userData.user);
+                setIsAuth(true);
+                setAccessToken(userData.accessToken);
+                setRefreshToken(userData.refreshToken);
+                localStorage.setItem('refreshToken', userData.refreshToken);
+                localStorage.setItem('user', JSON.stringify(userData.user));
+                await fetchUsersList(userData.accessToken);
+    
+                // Iniciar sesión automáticamente
+                login(userData.user.email, userData.accessToken);
+            } else {
+                throw new Error("Datos de autenticación inválidos");
+            }
+            return userData;
+        } catch (error) {
+            console.error("Error al manejar la callback de GitHub:", error);
+            throw new Error("Error al manejar la callback de GitHub");
+        }
+    };
+    
+
     const logout = async () => {
         try {
-
             if (user && user._id) {
                 await userAuth.updateUser(user._id, { online: false });
             }
@@ -99,7 +121,7 @@ export const AuthProvider = ({ children }) => {
     }, [accessToken]);
 
     return (
-        <AuthContext.Provider value={{ isAuth, setIsAuth, user, setUser, login, logout, accessToken, refreshToken, usersList, setUsersList, fetchUsersList }}>
+        <AuthContext.Provider value={{ isAuth, setIsAuth, user, setUser, login, loginWithGitHub, handleGitHubCallback, logout, accessToken, refreshToken, usersList, setUsersList, fetchUsersList }}>
             {children}
         </AuthContext.Provider>
     );
