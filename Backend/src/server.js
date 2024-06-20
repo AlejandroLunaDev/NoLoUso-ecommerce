@@ -8,6 +8,7 @@ import socketConfig from "./configs/socketConfig.js";
 import config from './configs/config.js';
 import dotenv from 'dotenv';
 dotenv.config();
+import cookiePrser from 'cookie-parser';
 
 // Import routes
 import productRouter from "./product/routes/productsRouter.js";
@@ -45,6 +46,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
+app.use(cookiePrser());
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', origin);
