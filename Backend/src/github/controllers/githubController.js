@@ -29,7 +29,7 @@ export const githubCallback = (req, res, next) => {
 export const githubRedirect = (req, res) => {
     // Determinar la URL de redirección en función del entorno
     const redirectURL = process.env.NODE_ENV === 'production'
-        ? 'https://no-lo-uso-ecommerce.vercel.app/'
+        ? 'https://nolouso-ecommerce-production.up.railway.app/'
         : 'http://localhost:5173/';
 
     res.redirect(redirectURL); // Redirige a la página principal o donde prefieras
