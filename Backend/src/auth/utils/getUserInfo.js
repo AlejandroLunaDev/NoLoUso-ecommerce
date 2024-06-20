@@ -5,5 +5,6 @@ export default function getUserInfo(user) {
         last_name: user.last_name,
         email: user.email,
         role: user.role,
+        avatar: user.avatar
     };
 }

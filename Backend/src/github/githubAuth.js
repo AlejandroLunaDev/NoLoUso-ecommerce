@@ -27,7 +27,7 @@ passport.use(new GitHubStrategy({
         }
         
         // Crear un nuevo usuario si no existe
-        const password = '123Pa$word';
+        const password = process.env.GITHUB_PLACEHOLDER_PASSWORD /* || Math.random().toString(36).slice(-8) */;
         const newUser = await AuthUserDao.createUser({
             first_name: profile._json.name ? profile._json.name.split(' ')[0] : 'GitHub User',
             last_name: profile._json.name ? profile._json.name.split(' ')[1] : 'User',

@@ -13,13 +13,12 @@ export const githubCallback = (req, res, next) => {
         }
 
         const { accessToken, refreshToken } = info;
-        
-        // Enviar los tokens al cliente
-        res.json({
-            message: 'Autenticación exitosa',
-            accessToken,
-            refreshToken
-        });
+
+        res.cookie('accessToken', accessToken);
+        res.cookie('refreshToken', refreshToken);
+
+        // Redirige al cliente sin los tokens en la URL
+        res.redirect('http://localhost:5173/');
     })(req, res, next);
 };
 
