@@ -32,6 +32,7 @@ const LoginForm = () => {
   const handleLoginWithGitHub = async () => {
     try {
       await loginWithGitHub();
+      
       navigate('/');
     } catch (error) {
       setError('Error al iniciar sesión con GitHub');

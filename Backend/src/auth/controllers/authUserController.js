@@ -8,7 +8,7 @@ import getUserInfo from "../utils/getUserInfo.js";
 class AuthUserController {
     async registerUser(req, res) {
         try {
-            const { email, password, first_name, last_name } = req.body;
+            const { email, password, first_name, last_name,avatar } = req.body;
 
             // Verificar si el usuario ya está registrado
             const existingUser = await AuthUserDao.getUserByEmail(email);
@@ -17,7 +17,7 @@ class AuthUserController {
             }
 
             // Crear un nuevo usuario de autenticación
-            const newUser = await AuthUserDao.createUser({ email, password, first_name, last_name });
+            const newUser = await AuthUserDao.createUser({ email, password, first_name, last_name, avatar: avatar || '' });
             const accessToken = generateAccessToken(newUser);
             const refreshToken = generateRefreshToken(newUser);
 

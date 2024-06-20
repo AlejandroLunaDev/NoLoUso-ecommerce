@@ -42,13 +42,11 @@ const cartsService = {
           'Authorization': `Bearer ${refreshToken}`,
         },
       });
-      console.log('API Response:', response); // Log de la respuesta completa
       if (!response.ok) {
         console.error('Error al obtener el carrito:', response.statusText);
         return undefined;
       }
       const data = await response.json();
-      console.log('Cart Data:', data); // Log de los datos del carrito
       return data;
     } catch (error) {
       console.error('Error al obtener el carrito:', error);

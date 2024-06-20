@@ -36,7 +36,6 @@ const userAuth = {
         credentials: "include",
       });
       const userData = await response.json();
-      // Guarda el refreshToken en el localStorage si está disponible
       if (userData.refreshToken) {
         localStorage.setItem('refreshToken', userData.refreshToken);
       }
@@ -67,7 +66,9 @@ const userAuth = {
         console.error("Logout failed:", errorText);
         throw new Error("Error al cerrar sesión");
       }
-      localStorage.removeItem('refreshToken'); // Remover el refreshToken al cerrar sesión
+      localStorage.removeItem('refreshToken');
+      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";    
       return await response.json();
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
