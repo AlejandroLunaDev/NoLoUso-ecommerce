@@ -13,8 +13,15 @@ export const githubCallback = (req, res, next) => {
 
         const { accessToken, refreshToken } = info;
 
-        res.cookie('accessToken', accessToken);
-        res.cookie('refreshToken', refreshToken);
+        let cookieOptions = {};
+
+        if (process.env.NODE_ENV === 'production') {
+            // Opciones de cookie para producción
+            cookieOptions = { sameSite: 'None', secure: true };
+        }
+
+        res.cookie('accessToken', accessToken, cookieOptions);
+        res.cookie('refreshToken', refreshToken, cookieOptions);
 
         // Determinar la URL de redirección en función del entorno
         const redirectURL = process.env.NODE_ENV === 'production'
@@ -27,10 +34,20 @@ export const githubCallback = (req, res, next) => {
 };
 
 export const githubRedirect = (req, res) => {
+    let cookieOptions = {};
+
+    if (process.env.NODE_ENV === 'production') {
+        // Opciones de cookie para producción
+        cookieOptions = { sameSite: 'None', secure: true };
+    }
+
     // Determinar la URL de redirección en función del entorno
     const redirectURL = process.env.NODE_ENV === 'production'
         ? 'https://nolouso-ecommerce-production.up.railway.app/'
         : 'http://localhost:5173/';
+
+    res.cookie('accessToken', accessToken, cookieOptions);
+    res.cookie('refreshToken', refreshToken, cookieOptions);
 
     res.redirect(redirectURL); // Redirige a la página principal o donde prefieras
 };
