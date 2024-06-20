@@ -1,4 +1,3 @@
-// src/github/controllers/githubController.js
 import passport from '../githubAuth.js';
 
 export const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
@@ -17,11 +16,21 @@ export const githubCallback = (req, res, next) => {
         res.cookie('accessToken', accessToken);
         res.cookie('refreshToken', refreshToken);
 
+        // Determinar la URL de redirección en función del entorno
+        const redirectURL = process.env.NODE_ENV === 'production'
+            ? 'https://no-lo-uso-ecommerce.vercel.app/'
+            : 'http://localhost:5173/';
+
         // Redirige al cliente sin los tokens en la URL
-        res.redirect('http://localhost:5173/');
+        res.redirect(redirectURL);
     })(req, res, next);
 };
 
 export const githubRedirect = (req, res) => {
-    res.redirect('http://localhost:5173/'); // Redirige a la página principal o donde prefieras
+    // Determinar la URL de redirección en función del entorno
+    const redirectURL = process.env.NODE_ENV === 'production'
+        ? 'https://no-lo-uso-ecommerce.vercel.app/'
+        : 'http://localhost:5173/';
+
+    res.redirect(redirectURL); // Redirige a la página principal o donde prefieras
 };

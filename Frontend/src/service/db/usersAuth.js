@@ -178,6 +178,7 @@ const userAuth = {
 
   async handleGitHubCallback() {
     try {
+      
       const response = await fetch(`${BASE_URL}github/callback`, {
         method: "GET",
         credentials: "include",
@@ -193,11 +194,9 @@ const userAuth = {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
   
-      // Llama a la función login para utilizar los tokens y establecer la autenticación
       await this.login({ accessToken, refreshToken });
   
-      // Redirigir al usuario a la página principal o donde prefieras
-      window.location.href = 'http://localhost:5173/login/';
+     
     } catch (error) {
       console.error("Error al manejar la callback de GitHub:", error);
       throw new Error("Error al manejar la callback de GitHub");
