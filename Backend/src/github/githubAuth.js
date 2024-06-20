@@ -6,10 +6,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { generateAccessToken, generateRefreshToken } from '../auth/utils/jwt.js';
 
+const callbackURL = process.env.NODE_ENV === 'production'
+  ? process.env.GITHUB_CALLBACK_URL_PROD
+  : process.env.GITHUB_CALLBACK_URL_DEV;
+
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK_URL,
+    callbackURL: callbackURL,
     scope: ['user:email'],
 }, async (accessToken, refreshToken, profile, done) => {
     try {
