@@ -1,81 +1,94 @@
-<div align="center">
-    <img src="./public/nlufavicon.svg" height="150">
+  <p align=center>
+  <img src="./public/nlufavicon.svg" height="150">
+  </p>
+
+<div align=center>Este proyecto todavia esta en desarrollo, motivado por el curso de backend de CorderHouse, integrando el proyecto del curso de React.
 </div>
 
-# Proyecto Ecommerce NoLoUso
+<br>
 
-[![website](https://img.shields.io/badge/Website-Up-brightgreen)](https://no-lo-uso-ecommerce.vercel.app/)
+<div align='center'>
+  <a href="https://no-lo-uso-ecommerce.vercel.app/" target="_blank">
+    <img  src="https://img.shields.io/badge/VER_DEMO-5A4FCF?style=for-the-badge&logo=vercel&logoColor=white"/>
+  </a>
+</div>
 
-## Descripción
+<br>
 
-**NoLoUso** es una aplicación de ecommerce Full-Stack desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Este proyecto permite la compra y venta de productos usados, proporcionando una plataforma intuitiva tanto para usuarios comunes (USER) como para administradores (ADMIN).
+## <img src="https://media.giphy.com/media/qjqUcgIyRjsl2/giphy.gif" width="50"/><b>Descripción</b>
 
+<div align=left>SiLoUso es una aplicación de ecommerce Full-Stack desarrollada con el stack MERN (MongoDB, Express, React, Node.js). Este proyecto permite la compra y venta de productos usados, proporcionando una plataforma intuitiva tanto para usuarios comunes (USER) como para administradores (ADMIN).
 Los usuarios pueden explorar productos, agregarlos al carrito y realizar compras. Los administradores tienen capacidades adicionales para gestionar productos, categorías y usuarios del sistema, asegurando un ambiente controlado y seguro.
+</div>
 
-**Visita** https://no-lo-uso-ecommerce.vercel.app/
+## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="50"><b> Características para Clientes</b>
 
-## Tecnologías Utilizadas
+1. **Experiencia Fluida**: Nuestra webapp proporciona una experiencia fluida para agendar citas.
+2. **Disponibilidad Transparente**: Los clientes pueden ver la disponibilidad de su profesional de confianza y seleccionar el horario que mejor les convenga.
+3. **Confirmación Rápida**: Los clientes pueden confirmar su cita en solo unos clics, sin llamadas telefónicas ni esperas.
 
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+## <img src="https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width ="30"><b> Tecnologías y Herramientas </b>
+
+<h3 align="center"><strong>Front-End:</strong></h3>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" style="margin: 0 10px;">
+
+  <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/material-ui-%234ED1C5.svg?style=for-the-badge&logo=chakraui&logoColor=white" alt="Chakra UI" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white" alt="NPM" style="margin: 0 10px;">
+
+</div>
+
+<h3 align="center"><strong>Back-End:</strong></h3>
+
+<div align="center">
+
+<img src='https://img.shields.io/badge/node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white' alt='Node.js'>
+<img src='https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB' alt='Express.js'>
+<img src='https://img.shields.io/badge/mongodb-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white' alt='MongoDB'>
+<img src='https://img.shields.io/badge/railway-%230062DF.svg?style=for-the-badge&logo=railway&logoColor=white' alt='Railway'>
+
+</div>
+
+<
+
+<h3 align="center"><strong>Entorno de Desarrolo:</strong></h3>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="Visual Studio Code" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white" alt="Git" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Netlify" style="margin: 0 10px;">
+</div>
+
+<h3 align="center"><strong>Control de Versiones:</strong></h3>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white" alt="Git" style="margin: 0 10px;">
+  <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style="margin: 0 10px;">
+</div>
+
+<h3 align="center"><strong>Deploy:</strong></h3>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Netlify" style="margin: 0 10px;">
+</div>
 
 
-## Características
 
-- **Autenticación y Autorización:** Registro e inicio de sesión para usuarios y administradores.
-- **Gestión de Productos:** Los administradores pueden agregar, editar y eliminar productos.
-- **Carrito de Compras:** Funcionalidad completa de carrito de compras para usuarios.
-- **Pasarela de Pago:** Integración con pasarela de pago segura.
-- **Interfaz Responsiva:** Diseño adaptable para dispositivos móviles y de escritorio.
-
-## Instalación
-
-Sigue estos pasos para configurar y ejecutar el proyecto localmente:
-
-```bash
-# Clona el repositorio
-git clone https://github.com/AlejandroLunaDev/NoLoUso-ecommerce.git
-
-# Navega al directorio del proyecto
-cd nolouso-ecommerce
-
-# Instala las dependencias del frontend y backend
-npm install
-
-# Construye el frontend y el backend
-npm run build:frontend
-npm run build:backend
-
-# Inicia el frontend en modo dev
-npm run dev:frontend
-
-# Inicia el backend en modo dev
-npm run dev:backend
-
-# Inicia el backend y frontend en modo dev
-npm run dev
-```
-
-## Uso
-
-Para usar la aplicación, sigue estos pasos:
-
-1. **Inicio de Sesión:** Regístrate o inicia sesión como usuario o administrador.
-2. **Explorar Productos:** Navega por la lista de productos disponibles.
-3. **Gestión de Productos:** (Solo administradores) Agrega, edita o elimina productos.
-4. **Carrito de Compras:** Agrega productos al carrito y procede a la compra.
-5. **Finalizar Compra:** Usa la pasarela de pago integrada para completar la compra.
+## <img src = "https://github.com/0xAbdulKhalid/0xAbdulKhalid/raw/main/assets/mdImages/about_me.gif" width = 50px><b> Equipo</b>
 
 
-## Contribución
 
-Si deseas contribuir al proyecto, por favor sigue estos pasos:
+### **Frontend - Backend**
 
-1. Haz un fork del repositorio.
-2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -m 'Agrega nueva funcionalidad'`).
-4. Sube tus cambios (`git push origin feature/nueva-funcionalidad`).
-5. Abre un Pull Request.
+|                                                                                                                                <img src="https://ca.slack-edge.com/T02KS88FB0E-U060HCTGTA9-e901b2129069-512" width=80>                                                                                                                                 |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                                                                                                   **Alejandro Luna**                                                                                                                                                                   |
+| <a href="https://github.com/AlejandroLunaDev"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/alejandro-luna-dev/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a> |
 
-## Autor
 
-Alejandro Luna https://github.com/AlejandroLunaDev/AlejandroLunaDev
+
