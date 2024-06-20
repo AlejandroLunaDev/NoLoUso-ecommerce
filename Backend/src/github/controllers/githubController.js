@@ -46,8 +46,11 @@ export const githubRedirect = (req, res) => {
         ? 'https://nolouso-ecommerce-production.up.railway.app/'
         : 'http://localhost:5173/';
 
+    // Establecer las cookies antes de redirigir
     res.cookie('accessToken', accessToken, cookieOptions);
     res.cookie('refreshToken', refreshToken, cookieOptions);
 
-    res.redirect(redirectURL); // Redirige a la página principal o donde prefieras
+    // Redirige a la página principal o donde prefieras
+    res.redirect(redirectURL);
 };
+
