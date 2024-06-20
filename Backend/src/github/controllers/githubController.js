@@ -38,7 +38,7 @@ export const githubRedirect = (req, res) => {
 
     if (process.env.NODE_ENV === 'production') {
         // Opciones de cookie para producción
-        cookieOptions = { sameSite: 'None'};
+        cookieOptions = { secure: true };
     }
 
     // Determinar la URL de redirección en función del entorno
