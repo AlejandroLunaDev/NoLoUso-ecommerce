@@ -3,6 +3,8 @@ import { AuthContext } from '../context/AuthProvider';
 import RegisterForm from './RegisterForm';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
+import CircularProgress from '@mui/material/CircularProgress';
+import { FaGithub } from 'react-icons/fa';
 
 const LoginForm = () => {
   const { login, loginWithGitHub } = useContext(AuthContext);
@@ -11,10 +13,12 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [loading, setLoading] = useState(false); // Estado de carga
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const credentials = { email, password };
       const data = await login(credentials);
@@ -22,6 +26,8 @@ const LoginForm = () => {
       navigate('/');
     } catch (error) {
       setError('Usuario o contraseña incorrectos');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,12 +36,14 @@ const LoginForm = () => {
   };
 
   const handleLoginWithGitHub = async () => {
+    setLoading(true);
     try {
       await loginWithGitHub();
-      
       navigate('/');
     } catch (error) {
       setError('Error al iniciar sesión con GitHub');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +61,7 @@ const LoginForm = () => {
               <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#61005D] focus:border-[#61005D] sm:text-sm" />
             </div>
             <div className="mb-6">
-              <label htmlFor="password" className=" text-sm font-medium text-gray-700 flex justify-between">
+              <label htmlFor="password" className="text-sm font-medium text-gray-700 flex justify-between">
                 Contraseña:
                 {showPassword ? (
                   <FaEyeSlash onClick={() => setShowPassword(false)} className="cursor-pointer text-gray-500" />
@@ -63,9 +71,18 @@ const LoginForm = () => {
               </label>
               <input type={showPassword ? 'text' : 'password'} id="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#61005D] focus:border-[#61005D] sm:text-sm" />
             </div>
-            <button type="submit" className="w-full bg-[#61005D] text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Iniciar Sesión</button>
+            <button type="submit" className="w-full bg-[#61005D] text-white py-2 px-4 rounded-md hover:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Iniciar Sesión'}
+            </button>
             <p className="text-center mt-4">¿No tienes una cuenta? <span className="text-[#61005D] font-semibold cursor-pointer" onClick={handleRegister}>Regístrate aquí</span></p>
-            <button type="button" className="w-full bg-[#333333] text-white py-2 px-4 rounded-md mt-4 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50" onClick={handleLoginWithGitHub}>Iniciar sesión con GitHub</button>
+            <button
+              type="button"
+              className="w-1/2 flex items-center justify-evenly bg-[#333333] text-white py-2 px-4 rounded-md mt-4 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+              onClick={handleLoginWithGitHub}
+              disabled={loading}
+            >
+              {loading ? <CircularProgress size={24} color="inherit" /> : <><FaGithub className="mr-2 h-7 w-7" /> GitHub</>}
+            </button>
           </form>
         </>
       )}

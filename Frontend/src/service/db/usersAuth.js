@@ -197,7 +197,7 @@ const userAuth = {
       await this.login({ accessToken, refreshToken });
   
       // Redirigir al usuario a la página principal o donde prefieras
-      window.location.href = 'http://localhost:5173/';
+      window.location.href = 'http://localhost:5173/login/';
     } catch (error) {
       console.error("Error al manejar la callback de GitHub:", error);
       throw new Error("Error al manejar la callback de GitHub");
