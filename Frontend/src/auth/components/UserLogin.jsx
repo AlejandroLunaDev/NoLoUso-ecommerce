@@ -29,7 +29,7 @@ export const UserLogin = () => {
             <img
               src={user.avatar}
               alt="User Avatar"
-              className="h-6 w-6 rounded-full"
+              className="h-8 w-8 rounded-full"
             />
           ) : user.role === "admin" ? (
             <GrUserAdmin className="h-6 w-6" />
