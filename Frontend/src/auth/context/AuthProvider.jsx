@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
         
         if (accessToken && refreshToken) {
           const decodedToken = jwtDecode(accessToken);
+          console.log('User:', decodedToken.user);
           setUser(decodedToken.user);
           setIsAuth(true);
           setAccessToken(accessToken);
