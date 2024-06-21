@@ -19,7 +19,8 @@ export const githubCallback = (req, res, next) => {
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'Lax', secure: true };
+            cookieOptions = { sameSite: 'Lax', secure: true,domain:'nolouso-ecommerce-production.up.railway.app' }
+            
         }
 
         res.cookie('accessToken', accessToken, cookieOptions);
