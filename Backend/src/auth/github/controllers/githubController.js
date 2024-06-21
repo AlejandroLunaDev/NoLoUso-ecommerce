@@ -19,7 +19,7 @@ export const githubCallback = (req, res, next) => {
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'Lax', secure: true,domain:'nolouso-ecommerce-production.up.railway.app' }
+            cookieOptions = { sameSite: 'Lax', secure: true,domain:'no-lo-uso-ecommerce.vercel.app ' }
             
         }
 
