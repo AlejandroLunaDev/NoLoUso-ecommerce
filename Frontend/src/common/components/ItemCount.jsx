@@ -2,29 +2,21 @@ import React, { useContext } from "react";
 import { Add, Remove } from "@/common/components";
 import { CartContext } from "@/cart/context/CartContext";
 
-export function ItemCount({ productId, stock }) {
-  const { cart, addQuantity, removeQuantity, setTotalQuantity, removeItem } =
-    useContext(CartContext);
-
-  const productInCart = cart.find((item) => item.id === productId);
-  const productQuantityInCart = productInCart ? productInCart.quantity : 0;
+export function ItemCount({ productId, stock, initial }) {
+  const { addQuantity, removeQuantity, setTotalQuantity, removeItem } = useContext(CartContext);
 
   const increment = () => {
-    if (productQuantityInCart < stock) {
-      if (productInCart) {
-        addQuantity(productId, 1);
-      } else {
-        addQuantity({ id: productId, quantity: 1 });
-      }
+    if (initial < stock) {
+      addQuantity(productId, 1);
       setTotalQuantity((prevTotalQuantity) => prevTotalQuantity + 1);
     }
   };
 
   const decrement = () => {
-    if (productQuantityInCart > 1) {
-      removeQuantity(productId);
+    if (initial > 1) {
+      removeQuantity(productId, 1);
       setTotalQuantity((prevTotalQuantity) => prevTotalQuantity - 1);
-    } else if (productQuantityInCart === 1) {
+    } else if (initial === 1) {
       removeItem(productId);
     }
   };
@@ -36,7 +28,7 @@ export function ItemCount({ productId, stock }) {
           <Remove />
         </button>
         <div className="text-[13px] border rounded-sm px-3">
-          {productQuantityInCart}
+          {initial}
         </div>
         <button className="border rounded-sm" onClick={increment}>
           <Add />

@@ -16,7 +16,7 @@ export const SidebarCart = ({ isOpen, setOpen }) => {
   const navigate = useNavigate();
   const descuento = 0;
 
-console.log(total)
+
 
   const alertaDeleteCarrito = () => {
     Swal.fire({

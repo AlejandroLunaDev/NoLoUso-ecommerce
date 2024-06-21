@@ -1,3 +1,4 @@
+// CartContext.js
 import React, { useState, createContext, useEffect } from "react";
 import cartsService from "../../service/db/cartService";
 
@@ -44,9 +45,6 @@ export const CartProvider = ({ children }) => {
       console.log('Adding product to cart:', { productId, quantity }); // Log de depuración
   
       // Obtener los datos del carrito
-      
-   /*    let cartData = await cartsService.createCart();
-      console.log('Cart data:', cartData);  */// Log de depuración
       let cartData = await cartsService.getCart();
       // Si el carrito no existe o está vacío, crearlo
       if (!cartData || !cartData.products) {
@@ -76,8 +74,6 @@ export const CartProvider = ({ children }) => {
       console.error('Error al agregar el producto al carrito:', error);
     }
   };
-  
-  
 
   const clearCart = async () => {
     try {
@@ -90,7 +86,45 @@ export const CartProvider = ({ children }) => {
       console.error('Error al vaciar el carrito:', error);
     }
   };
-  
+
+  const addQuantity = async (productId, quantity) => {
+    try {
+      await cartsService.addProductToCart(productId, quantity);
+      const cartData = await cartsService.getCart();
+      setCart(cartData.products || []);
+      updateTotals(cartData.products || []);
+    } catch (error) {
+      console.error('Error al aumentar la cantidad del producto:', error);
+    }
+  };
+
+  const removeQuantity = async (productId, quantity) => {
+    try {
+      const product = cart.find((item) => item.product._id === productId);
+      if (product.quantity > 1) {
+        await cartsService.updateProductQuantity(productId, product.quantity - quantity);
+      } else {
+        await cartsService.removeProductFromCart(productId);
+      }
+      const cartData = await cartsService.getCart();
+      setCart(cartData.products || []);
+      updateTotals(cartData.products || []);
+    } catch (error) {
+      console.error('Error al reducir la cantidad del producto:', error);
+    }
+  };
+
+  const removeItem = async (productId) => {
+    try {
+      await cartsService.removeProductFromCart(productId);
+      const cartData = await cartsService.getCart();
+      setCart(cartData.products || []);
+      updateTotals(cartData.products || []);
+    } catch (error) {
+      console.error('Error al eliminar el producto del carrito:', error);
+    }
+  };
+
   const isInCart = (productId) => {
     return cart.some((item) => item.product === productId);
   };
@@ -100,12 +134,14 @@ export const CartProvider = ({ children }) => {
       value={{
         cart,
         addItem,
+        addQuantity,
+        removeQuantity,
+        removeItem,
         totalQuantity,
         subtotal,
         total,
         clearCart,
         isInCart,
-
       }}
     >
       {children}
