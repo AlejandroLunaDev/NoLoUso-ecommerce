@@ -90,7 +90,7 @@ const LoginForm = () => {
             <div className="flex justify-between gap-3 mt-4">
               <button
                 type="button"
-                className="w-1/2 flex items-center justify-evenly border border-gray-600  text-black py-2 px-4 rounded-md  focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                className="w-1/2 flex items-center justify-evenly border border-[#61005D]  text-black py-2 px-4 rounded-md  focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
                 onClick={handleLoginWithGitHub}
                 disabled={loading}
               >
