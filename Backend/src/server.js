@@ -9,6 +9,8 @@ import config from './configs/config.js';
 import dotenv from 'dotenv';
 dotenv.config();
 import cookiePrser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from "./configs/swaggerConfig.js";
 
 // Import routes
 import productRouter from "./product/routes/productsRouter.js";
@@ -47,6 +49,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(cookiePrser());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', origin);
