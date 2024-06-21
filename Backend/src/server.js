@@ -19,6 +19,7 @@ import authRouter from "./auth/routes/AuthUserRouter.js";
 import messageRouter from "./chat/routes/messageRoutes.js";
 import cartRoutes from "./cart/routes/cartRouter.js";
 import githubRoutes from './auth/github/routes/githubRoutes.js';
+import googleRoutes from './auth/google/routes/googleRoutes.js';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -68,7 +69,8 @@ app.use('/api/carts', cartRoutes);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRouter);
-app.use(githubRoutes); // Agrega las rutas de GitHub
+app.use(githubRoutes);
+app.use(googleRoutes); 
 
 // Configure Socket.io
 socketConfig(httpServer);

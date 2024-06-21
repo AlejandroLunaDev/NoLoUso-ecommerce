@@ -1,19 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import RegisterForm from './RegisterForm';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc"; // Importa los íconos de GitHub y Google
 import { useNavigate } from 'react-router';
 import CircularProgress from '@mui/material/CircularProgress';
-import { FaGithub } from 'react-icons/fa';
 
 const LoginForm = () => {
-  const { login, loginWithGitHub } = useContext(AuthContext);
+  const { login, loginWithGitHub, loginWithGoogle } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [loading, setLoading] = useState(false); // Estado de carga
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -47,6 +47,18 @@ const LoginForm = () => {
     }
   };
 
+  const handleLoginWithGoogle = async () => {
+    setLoading(true);
+    try {
+      await loginWithGoogle();
+      navigate('/');
+    } catch (error) {
+      setError('Error al iniciar sesión con Google');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white p-8 rounded-lg w-96">
       <h2 className="text-2xl font-semibold mb-4">Iniciar Sesión</h2>
@@ -75,14 +87,24 @@ const LoginForm = () => {
               {loading ? <CircularProgress size={24} color="inherit" /> : 'Iniciar Sesión'}
             </button>
             <p className="text-center mt-4">¿No tienes una cuenta? <span className="text-[#61005D] font-semibold cursor-pointer" onClick={handleRegister}>Regístrate aquí</span></p>
-            <button
-              type="button"
-              className="w-1/2 flex items-center justify-evenly bg-[#333333] text-white py-2 px-4 rounded-md mt-4 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
-              onClick={handleLoginWithGitHub}
-              disabled={loading}
-            >
-              {loading ? <CircularProgress size={24} color="inherit" /> : <><FaGithub className="mr-2 h-7 w-7" /> GitHub</>}
-            </button>
+            <div className="flex justify-between gap-3 mt-4">
+              <button
+                type="button"
+                className="w-1/2 flex items-center justify-evenly border border-gray-600  text-black py-2 px-4 rounded-md  focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+                onClick={handleLoginWithGitHub}
+                disabled={loading}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : <><FaGithub className="mr-2 h-7 w-7" /> GitHub</>}
+              </button>
+              <button
+                type="button"
+                className="w-1/2 flex items-center justify-evenly border border-[#61005D]   text-black py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-[#61005D] focus:ring-opacity-50"
+                onClick={handleLoginWithGoogle}
+                disabled={loading}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : <><FcGoogle className="mr-2 h-7 w-7" />Google</>}
+              </button>
+            </div>
           </form>
         </>
       )}

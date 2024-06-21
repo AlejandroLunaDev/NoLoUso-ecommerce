@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useState, useEffect, useCallback } from 'react';
 import userAuth from '../../service/db/usersAuth';
 import Cookies from 'js-cookie';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -49,11 +49,11 @@ export const AuthProvider = ({ children }) => {
           setIsAuth(true);
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
-          
+
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
           localStorage.setItem('user', JSON.stringify(decodedToken.user));
-          
+
           await fetchUsersList(accessToken);
         }
       } catch (error) {
@@ -92,6 +92,10 @@ export const AuthProvider = ({ children }) => {
     userAuth.loginWithGitHub();
   };
 
+  const loginWithGoogle = () => {
+    userAuth.loginWithGoogle();
+  };
+
   const handleGitHubCallback = async () => {
     try {
       const userData = await userAuth.handleGitHubCallback();
@@ -113,6 +117,30 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Error al manejar la callback de GitHub:', error);
       throw new Error('Error al manejar la callback de GitHub');
+    }
+  };
+
+  const handleGoogleCallback = async () => {
+    try {
+      const userData = await userAuth.handleGoogleCallback();
+      if (userData && userData.accessToken && userData.refreshToken) {
+        setUser(userData.user);
+        setIsAuth(true);
+        setAccessToken(userData.accessToken);
+        setRefreshToken(userData.refreshToken);
+        localStorage.setItem('refreshToken', userData.refreshToken);
+        localStorage.setItem('user', JSON.stringify(userData.user));
+        await fetchUsersList(userData.accessToken);
+
+        // Iniciar sesión automáticamente
+        login(userData.user.email, userData.accessToken);
+      } else {
+        throw new Error('Datos de autenticación inválidos');
+      }
+      return userData;
+    } catch (error) {
+      console.error('Error al manejar la callback de Google:', error);
+      throw new Error('Error al manejar la callback de Google');
     }
   };
 
@@ -160,7 +188,9 @@ export const AuthProvider = ({ children }) => {
         setUser,
         login,
         loginWithGitHub,
+        loginWithGoogle,
         handleGitHubCallback,
+        handleGoogleCallback,
         logout,
         accessToken,
         refreshToken,

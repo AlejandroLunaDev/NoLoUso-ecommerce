@@ -202,6 +202,33 @@ const userAuth = {
       throw new Error("Error al manejar la callback de GitHub");
     }
   },
+
+  async loginWithGoogle() {
+    console.log("Enviando petición GET a:", `${BASE_URL}/auth/google`);
+    window.location.href = `${BASE_URL}/auth/google`;
+  },
+
+  async handleGoogleCallback() {
+    try {
+      console.log('base url:', BASE_URL)
+      const response = await fetch(`${BASE_URL}/auth/google/callback`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al manejar la callback de Google");
+      }
+
+      const { accessToken, refreshToken } = await response.json();
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+      await this.login({ accessToken, refreshToken });
+    } catch (error) {
+      console.error("Error al manejar la callback de Google:", error);
+      throw new Error("Error al manejar la callback de Google");
+    }
+  },
   
 
 
