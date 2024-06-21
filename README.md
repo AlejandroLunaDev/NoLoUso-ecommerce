@@ -77,7 +77,18 @@ Los usuarios pueden explorar productos, agregarlos al carrito y realizar compras
   <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Netlify" style="margin: 0 10px;">
 </div>
 
+## Documentación de la API
 
+ <img src="https://raw.githubusercontent.com/swagger-api/swagger.io/wordpress/images/assets/SW-logo-clr.png" width="70"/>
+
+Puedes encontrar la documentación completa de nuestra API utilizando Swagger en el siguiente enlace:
+
+[Documentación de la API Desarrollo](http://localhost:5173/api-docs)
+[Documentación de la API Producción](https://nolouso-ecommerce-production.up.railway.app/api-docs/)
+
+
+
+¡Explora y prueba nuestros endpoints para interactuar con la API de SiLoUso!
 
 ## <img src = "https://github.com/0xAbdulKhalid/0xAbdulKhalid/raw/main/assets/mdImages/about_me.gif" width = 50px><b> Equipo</b>
 
