@@ -1,10 +1,10 @@
 // src/github/githubAuth.js
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
-import AuthUserDao from '../auth/dao/authUserDao.js';
+import AuthUserDao from '../dao/authUserDao.js';
 import dotenv from 'dotenv';
 dotenv.config();
-import { generateAccessToken, generateRefreshToken } from '../auth/utils/jwt.js';
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt.js';
 
 const callbackURL = process.env.NODE_ENV === 'production'
   ? process.env.GITHUB_CALLBACK_URL_PROD

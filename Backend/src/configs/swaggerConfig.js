@@ -9,21 +9,28 @@ const swaggerOptions = {
       description: 'API para gestionar productos en SiLoUso',
       contact: {
         name: 'Tu Nombre',
-        email: 'tu@email.com',
-      },
+        email: 'tu@email.com'
+      }
     },
     servers: [
       {
         url: 'http://localhost:5173', // URL de tu servidor local
-        description: 'Servidor Local',
+        description: 'Servidor Local'
       },
       {
         url: 'https://no-lo-uso-ecommerce.vercel.app', // URL de tu servidor de producción
-        description: 'Servidor de Producción',
-      },
-    ],
+        description: 'Servidor de Producción'
+      }
+    ]
   },
-  apis: ['./product/routes/productsRouter.js'], // Ruta de tus rutas API
+  apis: [
+    './src/product/routes/productsRouter.js',
+    './src/chat/routes/messageRoutes.js',
+    './src/auth/routes/AuthUserRouter.js',
+    './src/cart/routes/cartRouter.js',
+    './src/auth/github/routes/githubRoutes.js',
+    './src/profile/routes/userRouter.js'
+  ] // Ruta de tus rutas API
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

@@ -18,7 +18,7 @@ import userRouter from "./profile/routes/userRouter.js";
 import authRouter from "./auth/routes/AuthUserRouter.js";
 import messageRouter from "./chat/routes/messageRoutes.js";
 import cartRoutes from "./cart/routes/cartRouter.js";
-import githubRoutes from './github/routes/githubRoutes.js';
+import githubRoutes from './auth/github/routes/githubRoutes.js';
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
