@@ -41,8 +41,6 @@ export const AuthProvider = ({ children }) => {
       try {
         const accessToken = Cookies.get('accessToken');
         const refreshToken = Cookies.get('refreshToken');
-        const tokenCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('accessToken='));
-        console.log('cookiejs:', tokenCookie);
         console.log('Cookies:', accessToken, refreshToken);
         if (accessToken && refreshToken) {
           const decodedToken = jwtDecode(accessToken);

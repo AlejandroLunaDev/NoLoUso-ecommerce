@@ -13,11 +13,13 @@ export const githubCallback = (req, res, next) => {
 
         const { accessToken, refreshToken } = info;
 
-        let cookieOptions = {};
+        let cookieOptions = {
+            sameSite: 'Lax',
+        };
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'None', secure: true };
+            cookieOptions = { sameSite: 'Lax', secure: true };
         }
 
         res.cookie('accessToken', accessToken, cookieOptions);
