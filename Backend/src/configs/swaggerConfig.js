@@ -4,12 +4,12 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Nombre de tu API',
+      title: 'SiLoUso API',
       version: '1.0.0',
       description: 'Descripción de tu API',
     },
   },
-  apis: ['./routes/*.js'], // Rutas donde se encuentran tus endpoints
+  apis: ['./product/routes/productsRouter.js'], 
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
