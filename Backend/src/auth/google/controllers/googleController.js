@@ -21,7 +21,7 @@
     let cookieOptions = {};
 
     if (process.env.NODE_ENV === 'production') {
-        cookieOptions = { sameSite: 'None', secure: true };
+        cookieOptions = { sameSite: 'None', secure: true, domain: '.railway.app' };
     }
 
     res.cookie('accessToken', accessToken, cookieOptions);
@@ -42,7 +42,7 @@
         let cookieOptions = {};
     
         if (process.env.NODE_ENV === 'production') {
-            cookieOptions = { sameSite: 'None', secure: true };
+            cookieOptions = { sameSite: 'None', secure: true, domain: '.railway.app' };
         }
     
         res.cookie('accessToken', accessToken, cookieOptions);
