@@ -22,7 +22,7 @@ export const githubCallback = (req, res, next) => {
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'Lax', secure: true,domain:'no-lo-uso-ecommerce.vercel.app' }
+            cookieOptions = { sameSite: 'Lax', secure: true }
             
         }
 
@@ -44,7 +44,7 @@ export const githubRedirect = (req, res) => {
 
     if (process.env.NODE_ENV === 'production') {
         // Opciones de cookie para producción
-        cookieOptions = { sameSite: 'None', secure: true,domain:'no-lo-uso-ecommerce.vercel.app' };
+        cookieOptions = { sameSite: 'None', secure: true};
     }
 
     // Determinar la URL de redirección en función del entorno
