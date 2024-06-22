@@ -1,4 +1,7 @@
 import passport from '../githubAuth.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const githubAuth = passport.authenticate('github', { scope: ['user:email'] });
 
