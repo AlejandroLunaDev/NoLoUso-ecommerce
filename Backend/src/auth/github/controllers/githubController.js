@@ -43,7 +43,7 @@ export const githubRedirect = (req, res) => {
     if (process.env.NODE_ENV === 'production') {
         // Opciones de cookie para producción
         console.log()
-        cookieOptions = { sameSite: 'None', secure: true, domain: '.railway.app' };
+        cookieOptions = { sameSite: 'None', secure: true, domain: '.vercel.app' };
     }
 
     // Determinar la URL de redirección en función del entorno
