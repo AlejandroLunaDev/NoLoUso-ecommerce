@@ -16,13 +16,11 @@ export const githubCallback = (req, res, next) => {
 
         const { accessToken, refreshToken } = info;
 
-        let cookieOptions = {
-            sameSite: 'Lax',
-        };
+        let cookieOptions = {};
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'Lax', secure: true,domain: 'no-lo-uso-ecommerce.vercel.app' }
+            cookieOptions = { sameSite: 'None', secure: true,domain: 'no-lo-uso-ecommerce.vercel.app',httpOnly: true };
             
         }
 
@@ -44,7 +42,8 @@ export const githubRedirect = (req, res) => {
 
     if (process.env.NODE_ENV === 'production') {
         // Opciones de cookie para producción
-        cookieOptions = { sameSite: 'None', secure: true,domain: 'no-lo-uso-ecommerce.vercel.app'};
+        console.log()
+        cookieOptions = { sameSite: 'None', secure: true,domain: 'no-lo-uso-ecommerce.vercel.app',httpOnly: true };
     }
 
     // Determinar la URL de redirección en función del entorno
