@@ -20,7 +20,7 @@ export const githubCallback = (req, res, next) => {
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'None', secure: true};
+            cookieOptions = { sameSite: 'None', secure: true, domain: '.api.silouso.shop' };
             
         }
 
@@ -43,7 +43,7 @@ export const githubRedirect = (req, res) => {
     if (process.env.NODE_ENV === 'production') {
         // Opciones de cookie para producción
         console.log()
-        cookieOptions = { sameSite: 'None', secure: true };
+        cookieOptions = { sameSite: 'None', secure: true, domain: '.api.silouso.shop' };
     }
 
     // Determinar la URL de redirección en función del entorno
