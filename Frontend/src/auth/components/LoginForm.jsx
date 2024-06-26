@@ -15,7 +15,7 @@ const LoginForm = () => {
   const [showRegister, setShowRegister] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  console.log('hola')
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
