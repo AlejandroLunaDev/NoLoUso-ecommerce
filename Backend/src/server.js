@@ -35,7 +35,7 @@ const httpServer = app.listen(port, () => {
 connectDB();
 
 const origin = isProduction
-  ? 'https://no-lo-uso-ecommerce.vercel.app'
+  ? 'https://silouso.shop'
   : `http://localhost:5173`;
 console.log(`Origin: ${origin}`);
 
