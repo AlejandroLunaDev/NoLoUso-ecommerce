@@ -28,7 +28,7 @@ const port = config.LOCAL_PORT;
 console.log("Listening on port " + port);
 
 const httpServer = app.listen(port, () => {
-  console.log(`Server running on ${isProduction ? config.PRODUCTION_URL : `http://localhost:${port}`}`);
+  console.log(`Server running on port ${isProduction ? config.PRODUCTION_URL : `http://localhost:${port}`}`);
 });
 
 // Connect to the database
