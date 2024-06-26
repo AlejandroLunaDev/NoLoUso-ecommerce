@@ -20,7 +20,7 @@ export const githubCallback = (req, res, next) => {
 
         if (process.env.NODE_ENV === 'production') {
             // Opciones de cookie para producción
-            cookieOptions = { sameSite: 'None', secure: true, domain: '.railway.app'};
+            cookieOptions = { sameSite: 'None', secure: true, domain: '.vercel.app'};
             
         }
 
