@@ -27,7 +27,7 @@ export const UserLogin = () => {
         >
           {user.avatar ? (
             <img
-              src={user.avatar}
+              src={user?.avatar}
               alt="User Avatar"
               className="h-8 w-8 rounded-full"
             />
