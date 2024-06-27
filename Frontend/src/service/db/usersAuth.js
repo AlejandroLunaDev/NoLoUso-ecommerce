@@ -1,4 +1,4 @@
-
+import Cookies from 'js-cookie';
 const isProduction = import.meta.env.MODE === 'production';
 const BASE_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
 const SOCKET_URL = isProduction ? import.meta.env.VITE_SOCKET_URL_PROD : import.meta.env.VITE_SOCKET_URL_DEV;
@@ -67,8 +67,9 @@ const userAuth = {
         throw new Error("Error al cerrar sesión");
       }
       localStorage.removeItem('refreshToken');
-      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";    
+      Cookies.remove('accessToken', { path: '/', domain: '.silouso.shop' });
+      Cookies.remove('refreshToken', { path: '/', domain: '.silouso.shop' });
+   
       return await response.json();
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
