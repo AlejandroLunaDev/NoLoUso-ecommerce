@@ -29,7 +29,7 @@ export const githubCallback = (req, res, next) => {
 
         // Determinar la URL de redirección en función del entorno
         const redirectURL = process.env.NODE_ENV === 'production'
-            ? 'https://no-lo-uso-ecommerce.vercel.app/'
+            ? 'https://silouso.shop/'
             : 'http://localhost:5173/';
 
         // Redirige al cliente sin los tokens en la URL
@@ -48,7 +48,7 @@ export const githubRedirect = (req, res) => {
 
     // Determinar la URL de redirección en función del entorno
     const redirectURL = process.env.NODE_ENV === 'production'
-        ? 'https://nolouso-ecommerce-production.up.railway.app/'
+        ? 'https://silouso.shop/'
         : 'http://localhost:5173/';
 
     // Establecer las cookies antes de redirigir

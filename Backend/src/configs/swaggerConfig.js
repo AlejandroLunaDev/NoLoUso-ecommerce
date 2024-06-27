@@ -18,7 +18,7 @@ const swaggerOptions = {
         description: 'Servidor Local'
       },
       {
-        url: 'https://no-lo-uso-ecommerce.vercel.app', // URL de tu servidor de producción
+        url: 'https://silouso.shop', // URL de tu servidor de producción
         description: 'Servidor de Producción'
       }
     ]
